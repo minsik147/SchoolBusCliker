@@ -1,8 +1,12 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +20,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -38,11 +46,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("haha");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("");
+
         tb_start = findViewById(R.id.tb_start);
-        tb_start.setText("하하");
         tb_end = findViewById(R.id.tb_end);
         tb_count = findViewById(R.id.tb_count);
+        tb_busStop = findViewById(R.id.tb_busStop);
 
         str_start = "대전역";
         tb_busStop_start = findViewById(R.id.tb_busStop_start);
@@ -124,54 +134,87 @@ public class MainActivity extends AppCompatActivity
         @Override
         public void run()
         {
-           while(is)
-           {
-               JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, serverUrl, null, new Response.Listener<JSONArray>()
-               {
-                   @Override
-                   public void onResponse(JSONArray response)
-                   {
-                       try
-                       {
-                           for (int i = 0; i < response.length(); i++)
-                           {
-                               JSONObject jsonObject = response.getJSONObject(i);
-                               int count = Integer.parseInt(jsonObject.getString("count"));
+            while(is)
+            {
+                JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, serverUrl, null, new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try
+                        {
+                            for (int i = 0; i < response.length(); i++)
+                            {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                int count = Integer.parseInt(jsonObject.getString("count"));
 
-                               if (GET_COUNT != count)
-                               {
-                                   tb_count.setText(count + "");
-                                   data();
-                               }
-                           }
-                       }
-                       catch (JSONException e)
-                       {
-                           e.printStackTrace();
-                       }
-                   }
-               }, new Response.ErrorListener()
-               {
-                   @Override
-                   public void onErrorResponse(VolleyError error)
-                   {
+                                if (GET_COUNT != count)
+                                {
+                                    tb_count.setText(count + "");
+                                    data();
+                                }
+                            }
+                        }
+                        catch (JSONException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
 
-                   }
-               });
+                    }
+                });
 
-               RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
-               requestQueue.add(jsonArrayRequest);
+                requestQueue.add(jsonArrayRequest);
 
-               try
-               {
-                   Thread.sleep(1000);
-               }
-               catch (InterruptedException e)
-               {
+                System.out.println("1");
+                try
+                {
+                    Thread.sleep(10000);
+                }
+                catch (InterruptedException e)
+                {
 
-               }
-           }
+                }
+            }
         }
+    }
+
+    // 뒤로가기 버튼
+    private long tempTime = System.currentTimeMillis();
+    @Override
+    public void onBackPressed()
+    {
+//        super.onBackPressed();
+        if (System.currentTimeMillis() > tempTime + 2000)
+        {
+            tempTime = System.currentTimeMillis();
+            Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (System.currentTimeMillis() <= tempTime + 2000)
+        {
+            is = false;
+            finish();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home :
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
