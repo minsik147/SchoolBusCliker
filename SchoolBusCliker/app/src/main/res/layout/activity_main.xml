@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="등교"
-            android:background="@drawable/button"
+            android:background="@drawable/selector_button2"
+            android:textColor="@drawable/selector_text"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textSize="16sp"
@@ -40,7 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="하교"
-            android:background="@drawable/button"
+            android:background="@drawable/selector_button"
+            android:textColor="@drawable/selector_text"
             android:textAlignment="center"
             android:textAllCaps="true"
             android:textSize="16sp"
@@ -57,9 +59,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="1.0"
-        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/selector_button">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
