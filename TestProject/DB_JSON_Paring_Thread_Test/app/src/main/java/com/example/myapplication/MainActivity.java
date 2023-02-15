@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity
     {
         String serverUrl = "https://as8794.cafe24.com/new_bus_clicker/get_json/get_json_bus_city.php";
 
-        itemCheck item = new itemCheck();
-
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, serverUrl, null, new Response.Listener<JSONArray>()
         {
             @Override
@@ -128,8 +126,6 @@ public class MainActivity extends AppCompatActivity
 
         String serverUrl = "https://as8794.cafe24.com/new_bus_clicker/get_count_data/test.php";
         // String serverUrl = "https://as8794.cafe24.com/new_bus_clicker/get_json/get_json_bus_city.php";
-
-        itemCheck item = new itemCheck();
 
         @Override
         public void run()
