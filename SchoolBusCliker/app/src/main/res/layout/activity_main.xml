@@ -20,34 +20,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <Button
-            android:id="@+id/bt_goSchool"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="등교"
-            android:background="@drawable/selector_button2"
-            android:textColor="@drawable/selector_text"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/bt_goHome"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="하교"
-            android:background="@drawable/selector_button"
-            android:textColor="@drawable/selector_text"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.0"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_menu"
@@ -62,8 +35,18 @@
         app:menu="@menu/bottom_menu"
         tools:ignore="MissingConstraints"
         android:background="@drawable/selector_button">
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="409dp"
+        android:layout_height="673dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

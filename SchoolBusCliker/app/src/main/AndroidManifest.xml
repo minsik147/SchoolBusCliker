@@ -12,6 +12,18 @@
         android:theme="@style/Theme.SchoolBusCliker"
         tools:targetApi="31">
         <activity
+            android:name=".MyInformation"
+            android:exported="false" />
+        <activity
+            android:name=".ReservationInformation"
+            android:exported="false" />
+        <activity
+            android:name=".SearchBusStopFragment"
+            android:exported="false" />
+        <activity
+            android:name=".ReservationFragment"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

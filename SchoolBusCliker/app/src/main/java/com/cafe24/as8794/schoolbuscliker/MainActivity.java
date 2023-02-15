@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +16,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
 public class MainActivity extends AppCompatActivity
 {
-    Button bt_goSchool;
-    Button bt_goHome;
+    BottomNavigationView bottomNavigationView;
+
+    ReservationFragment reservationFragment;
+    SearchBusStopFragment searchBusStopFragment;
+    ReservationInformation reservationInformation;
+    MyInformation myInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -24,44 +35,62 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 프래그먼트 설정
+        reservationFragment = new ReservationFragment();
+        searchBusStopFragment = new SearchBusStopFragment();
+        reservationInformation = new ReservationInformation();
+        myInformation = new MyInformation();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
+
         // 상단바 설정
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("예약하기");
 
-        // 아이디 값 설정
-        bt_goSchool = findViewById(R.id.bt_goSchool);
-        bt_goHome = findViewById(R.id.bt_goHome);
-
-        // 버튼 클릭 리스너
-        bt_goSchool.setOnClickListener(new View.OnClickListener()
+        // 바텀네비게이션 설정
+        bottomNavigationView = findViewById(R.id.bottom_menu);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
         {
             @Override
-            public void onClick(View v)
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
             {
-                bt_goSchool.setBackgroundResource(R.drawable.selector_button2);
-                bt_goHome.setBackgroundResource(R.drawable.selector_button);
-            }
-        });
-
-        bt_goHome.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                bt_goSchool.setBackgroundResource(R.drawable.selector_button);
-                bt_goHome.setBackgroundResource(R.drawable.selector_button2);
+                switch (item.getItemId())
+                {
+                    case R.id.item1:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
+                        return true;
+                    case R.id.item2:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusStopFragment).commit();
+                        return true;
+                    case R.id.item3:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationInformation).commit();
+                        return true;
+                    case R.id.item4:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, myInformation).commit();
+                        return true;
+                }
+                return false;
             }
         });
     }
 
     // 뒤로가기
+    private long tempTime = System.currentTimeMillis();
     @Override
     public void onBackPressed()
     {
 //        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
-        finish();
+        if (System.currentTimeMillis() > tempTime + 2000)
+        {
+            tempTime = System.currentTimeMillis();
+            Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (System.currentTimeMillis() <= tempTime + 2000)
+        {
+            finish();
+        }
     }
 
     @Override
