@@ -1,21 +1,22 @@
 package com.cafe24.as8794.schoolbuscliker;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-public class SearchBusStopFragment extends Fragment
+public class ReservationGoHomeListFragment extends Fragment
 {
+
     MainActivity main;
 
-
-    public SearchBusStopFragment()
+    public ReservationGoHomeListFragment()
     {
         super();
     }
@@ -44,7 +45,7 @@ public class SearchBusStopFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.activity_serach_bus_stop_fragment, container, false);
+        View view = inflater.inflate(R.layout.activity_reservation_go_home_list_fragment, container, false);
 
         return view;
     }

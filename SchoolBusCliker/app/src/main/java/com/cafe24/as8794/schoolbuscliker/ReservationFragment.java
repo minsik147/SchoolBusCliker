@@ -15,6 +15,8 @@ import android.widget.Button;
 public class ReservationFragment extends Fragment
 {
     MainActivity main;
+    ReservationGoSchoolListFragment reservationGoSchoolListFragment;
+    ReservationGoHomeListFragment reservationGoHomeListFragment;
 
     Button bt_goSchool;
     Button bt_goHome;
@@ -50,6 +52,11 @@ public class ReservationFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.activity_reservation_fragment, container, false);
 
+        reservationGoSchoolListFragment = new ReservationGoSchoolListFragment();
+        reservationGoHomeListFragment = new ReservationGoHomeListFragment();
+
+        getChildFragmentManager().beginTransaction().replace(R.id.lin_fragment, reservationGoSchoolListFragment).commit();
+
         bt_goSchool = view.findViewById(R.id.bt_goSchool);
         bt_goHome = view.findViewById(R.id.bt_goHome);
 
@@ -60,6 +67,7 @@ public class ReservationFragment extends Fragment
             {
                 bt_goSchool.setBackgroundResource(R.drawable.selector_button2);
                 bt_goHome.setBackgroundResource(R.drawable.selector_button);
+                getChildFragmentManager().beginTransaction().replace(R.id.lin_fragment, reservationGoSchoolListFragment).commit();
             }
         });
 
@@ -70,6 +78,7 @@ public class ReservationFragment extends Fragment
             {
                 bt_goSchool.setBackgroundResource(R.drawable.selector_button);
                 bt_goHome.setBackgroundResource(R.drawable.selector_button2);
+                getChildFragmentManager().beginTransaction().replace(R.id.lin_fragment, reservationGoHomeListFragment).commit();
             }
         });
 
