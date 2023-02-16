@@ -57,15 +57,19 @@ public class MainActivity extends AppCompatActivity
                 switch (item.getItemId())
                 {
                     case R.id.item1:
+                        getSupportActionBar().setTitle("예약하기");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
                         return true;
                     case R.id.item2:
+                        getSupportActionBar().setTitle("정류장찾기");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusStopFragment).commit();
                         return true;
                     case R.id.item3:
+                        getSupportActionBar().setTitle("예약정보");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationInformation).commit();
                         return true;
                     case R.id.item4:
+                        getSupportActionBar().setTitle("내정보");
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, myInformation).commit();
                         return true;
                 }
