@@ -8,12 +8,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-public class SearchBusStopFragment extends Fragment
+import com.naver.maps.map.MapFragment;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.util.FusedLocationSource;
+
+public class SearchBusStopFragment extends Fragment implements OnMapReadyCallback
 {
     MainActivity main;
-
+    NaverMap mNaverMap;
+    FusedLocationSource fusedLocationSource;
 
     public SearchBusStopFragment()
     {
@@ -46,6 +54,26 @@ public class SearchBusStopFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.activity_serach_bus_stop_fragment, container, false);
 
+        FragmentManager fm = getChildFragmentManager();
+        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
+
+        if (mapFragment == null)
+        {
+            mapFragment = MapFragment.newInstance();
+            fm.beginTransaction().add(R.id.map, mapFragment).commit();
+        }
+        mapFragment.getMapAsync(this);
+
+        fusedLocationSource = new FusedLocationSource(this, 1000);
+
+
         return view;
+    }
+
+    @Override
+    public void onMapReady(@NonNull NaverMap naverMap)
+    {
+        mNaverMap = naverMap;
+        mNaverMap.setLocationSource(fusedLocationSource);
     }
 }

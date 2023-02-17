@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         // 프래그먼트 설정
         reservationFragment = new ReservationFragment();
         searchBusStopFragment = new SearchBusStopFragment();
