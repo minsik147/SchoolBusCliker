@@ -4,6 +4,7 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +37,10 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
+
+    double longitude;
+    double latitude;
+
 
 
 
@@ -87,10 +92,14 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     public void onMapReady(@NonNull NaverMap naverMap)
     {
         this.naverMap = naverMap;
-        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng( 36.32531033063099, 127.33872694921837 ));
+        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng( latitude, longitude));
         naverMap.moveCamera(cameraUpdate);
-        naverMap.setLocationSource(locationSource);
-        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
+    }
+
+    void setLocation(double longitude, double latitude)
+    {
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
 }
