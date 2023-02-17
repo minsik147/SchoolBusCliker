@@ -1,5 +1,7 @@
 package com.cafe24.as8794.schoolbuscliker;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,6 +23,10 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.naver.maps.map.LocationTrackingMode;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.util.FusedLocationSource;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -29,13 +37,20 @@ public class MainActivity extends AppCompatActivity
     ReservationInformation reservationInformation;
     MyInformation myInformation;
 
+    // 네이버 맵 관련
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private FusedLocationSource locationSource;
+    private NaverMap naverMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        final LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // 네이버 맵 관련
+        locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
         // 프래그먼트 설정
         reservationFragment = new ReservationFragment();
@@ -110,4 +125,5 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
