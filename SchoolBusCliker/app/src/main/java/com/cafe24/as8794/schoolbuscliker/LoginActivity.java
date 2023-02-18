@@ -1,9 +1,25 @@
 package com.cafe24.as8794.schoolbuscliker;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +27,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
 public class LoginActivity extends AppCompatActivity
 {
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1981;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 2981;
+    private static final String[] PERMISSIONS =
+            {
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            };
+
     EditText et_id;
     EditText et_password;
     Button bt_login;
@@ -28,6 +63,24 @@ public class LoginActivity extends AppCompatActivity
         et_id = findViewById(R.id.et_id);
         et_password = findViewById(R.id.et_password);
         bt_login = findViewById(R.id.bt_login);
+
+        ActivityCompat.requestPermissions(this, PERMISSIONS, 1000);
+
+//        int permssionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
+//
+//        if (permssionCheck!= PackageManager.PERMISSION_GRANTED)
+//        {
+////            Toast.makeText(this,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
+////            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
+////            {
+////                Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
+////            } else
+////            {
+////                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+////                Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
+////            }
+//        }
+
 
         bt_login.setOnClickListener(new View.OnClickListener()
         {
@@ -70,5 +123,29 @@ public class LoginActivity extends AppCompatActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // 권한 테스트
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+            case 1000:
+            {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+//                    Toast.makeText(this, "승인이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+//                    Toast.makeText(this, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
+
+        }
     }
 }

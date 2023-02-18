@@ -7,10 +7,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -59,56 +61,54 @@ public class MainActivity extends AppCompatActivity
         myInformation = new MyInformation();
 
         // 네이버 맵 관련
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
         {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            try
+            {
+                LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                final LocationListener gpsLocationListener = new LocationListener()
+                {
+                    public void onLocationChanged(Location location) {
+
+                        String provider = location.getProvider();
+                        double longitude = location.getLongitude();
+                        double latitude = location.getLatitude();
+                        double altitude = location.getAltitude();
+
+                        String str = "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도  : " + altitude;
+
+//                    Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+
+                        searchBusStopFragment.setLocation(longitude, latitude);
+                    }
+
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                    }
+
+                    public void onProviderEnabled(String provider) {
+                    }
+
+                    public void onProviderDisabled(String provider) {
+                    }
+                };
+
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
+            }
+            catch (Exception e)
+            {
+
+            }
+
         }
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        final LocationListener gpsLocationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-
-                String provider = location.getProvider();
-                double longitude = location.getLongitude();
-                double latitude = location.getLatitude();
-                double altitude = location.getAltitude();
-
-                System.out.println("위치정보 : " + provider + "\n" +
-                        "위도 : " + longitude + "\n" +
-                        "경도 : " + latitude + "\n" +
-                        "고도  : " + altitude);
-
-                searchBusStopFragment.setLocation(longitude, latitude);
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
-        };
-
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                1000,
-                1,
-                gpsLocationListener);
-        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                1000,
-                1,
-                gpsLocationListener);
-
-
+        else
+        {
+            double latitude = 36.32588035150573;
+            double longitude = 127.33871827934472;
+            searchBusStopFragment.setLocation(longitude, latitude);
+        }
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
 
@@ -177,5 +177,7 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
