@@ -17,7 +17,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.Manifest;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.naver.maps.geometry.LatLng;
@@ -36,6 +38,7 @@ import java.util.Map;
 public class SearchBusStopFragment extends Fragment implements OnMapReadyCallback
 {
     MainActivity main;
+    Spinner spinner;
 
     // 네이버 맵 관련
     private NaverMap naverMap;
@@ -83,11 +86,13 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-
-
         View view = inflater.inflate(R.layout.activity_serach_bus_stop_fragment, container, false);
 
         btn_location = view.findViewById(R.id.btn_location);
+        spinner = view.findViewById(R.id.sp_busList);
+
+        ArrayAdapter spAdapter = ArrayAdapter.createFromResource(main, R.array.bus, android.R.layout.simple_spinner_item);
+        spinner.setAdapter(spAdapter);
 
         // 현재 위치
         locationSource = new FusedLocationSource(main, LOCATION_PERMISSION_REQUEST_CODE);
@@ -121,12 +126,6 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     {
         this.longitude = longitude;
         this.latitude = latitude;
-//
-//        if (isLocation == false)
-//        {
-//            Toast.makeText(main, "사용자의 현 위치를 찾았습니다.", Toast.LENGTH_SHORT).show();
-//            isLocation = true;
-//        }
     }
 
     @Override

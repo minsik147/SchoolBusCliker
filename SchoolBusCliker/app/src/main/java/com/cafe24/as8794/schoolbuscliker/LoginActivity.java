@@ -11,7 +11,9 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -65,22 +67,6 @@ public class LoginActivity extends AppCompatActivity
         bt_login = findViewById(R.id.bt_login);
 
         ActivityCompat.requestPermissions(this, PERMISSIONS, 1000);
-
-//        int permssionCheck = ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION);
-//
-//        if (permssionCheck!= PackageManager.PERMISSION_GRANTED)
-//        {
-////            Toast.makeText(this,"권한 승인이 필요합니다",Toast.LENGTH_LONG).show();
-////            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION))
-////            {
-////                Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
-////            } else
-////            {
-////                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
-////                Toast.makeText(this,"000부분 사용을 위해 카메라 권한이 필요합니다.",Toast.LENGTH_LONG).show();
-////            }
-//        }
-
 
         bt_login.setOnClickListener(new View.OnClickListener()
         {

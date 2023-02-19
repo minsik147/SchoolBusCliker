@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context=".SearchBusStopFragment">
 
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/sp_busList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_button"
+        android:textColor="@drawable/selector_text" />
+
     <fragment
         android:layout_width="match_parent"
         android:layout_height="0dp"

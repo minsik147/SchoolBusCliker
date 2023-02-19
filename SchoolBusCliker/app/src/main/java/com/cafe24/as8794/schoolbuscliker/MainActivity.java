@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity
             try
             {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
                 final LocationListener gpsLocationListener = new LocationListener()
                 {
@@ -82,6 +82,15 @@ public class MainActivity extends AppCompatActivity
 //                    Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
 
                         searchBusStopFragment.setLocation(longitude, latitude);
+
+                        try
+                        {
+                            searchBusStopFragment.LocationPoint();
+                        }
+                        catch (Exception e)
+                        {
+                            // Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -94,8 +103,8 @@ public class MainActivity extends AppCompatActivity
                     }
                 };
 
-                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1, gpsLocationListener);
-                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, gpsLocationListener);
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 1, gpsLocationListener);
+                lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 1, gpsLocationListener);
             }
             catch (Exception e)
             {
