@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
 
+    String str_busNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -80,9 +82,7 @@ public class MainActivity extends AppCompatActivity
                         String str = "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도  : " + altitude;
 
 //                    Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
-
                         searchBusStopFragment.setLocation(longitude, latitude);
-
                         try
                         {
                             searchBusStopFragment.LocationPoint();
@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity
                         {
                             // Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
                         }
+
+
                     }
 
                     public void onStatusChanged(String provider, int status, Bundle extras) {
