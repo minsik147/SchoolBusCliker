@@ -21,7 +21,7 @@
                 <Button
                     android:id="@+id/bt_D1"
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스1번"
                     android:layout_margin="7dp"
@@ -29,7 +29,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스2번"
                     android:layout_margin="7dp"
@@ -44,7 +44,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스3번"
                     android:layout_margin="7dp"
@@ -52,7 +52,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스4번"
                     android:layout_margin="7dp"
@@ -67,7 +67,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스5번"
                     android:layout_margin="7dp"
@@ -75,7 +75,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스6번"
                     android:layout_margin="7dp"
@@ -90,7 +90,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스7번"
                     android:layout_margin="7dp"
@@ -98,11 +98,12 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="등교버스8번"
                     android:layout_margin="7dp"
-                    android:background="@drawable/selector_button"/>
+                    android:background="@drawable/selector_button"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 

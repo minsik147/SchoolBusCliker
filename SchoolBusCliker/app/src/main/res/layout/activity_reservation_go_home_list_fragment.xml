@@ -20,7 +20,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="하교버스1번"
                     android:layout_margin="7dp"
@@ -28,7 +28,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="하교버스2번"
                     android:layout_margin="7dp"
@@ -43,7 +43,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="하교버스3번"
                     android:layout_margin="7dp"
@@ -51,7 +51,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="하교버스4번"
                     android:layout_margin="7dp"
@@ -66,7 +66,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="하교버스5번"
                     android:layout_margin="7dp"
@@ -74,34 +74,12 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="150dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:text="하교버스6번"
                     android:layout_margin="7dp"
-                    android:background="@drawable/selector_button"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:text="하교버스7번"
-                    android:layout_margin="7dp"
-                    android:background="@drawable/selector_button"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="150dp"
-                    android:layout_weight="1"
-                    android:text="하교버스8번"
-                    android:layout_margin="7dp"
-                    android:background="@drawable/selector_button"/>
+                    android:background="@drawable/selector_button"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 
