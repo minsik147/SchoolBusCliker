@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -15,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SchoolBusCliker"
         tools:targetApi="31">
+        <activity
+            android:name=".BusReservation_D1_BusStop"
+            android:exported="false" />
+        <activity
+            android:name=".BusReservation_D1_Date"
+            android:exported="false" />
         <activity
             android:name=".ReservationGoHomeListFragment"
             android:exported="false" />
@@ -49,9 +57,6 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="adfghupu9a" />
-
     </application>
-
-
 
 </manifest>

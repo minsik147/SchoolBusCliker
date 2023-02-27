@@ -36,6 +36,15 @@ import com.naver.maps.map.util.FusedLocationSource;
 
 public class MainActivity extends AppCompatActivity
 {
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
+    private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1981;
+    private static final int REQUEST_CODE_LOCATION_SETTINGS = 2981;
+    private static final String[] PERMISSIONS =
+            {
+                    android.Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            };
+
     BottomNavigationView bottomNavigationView;
 
     ReservationFragment reservationFragment;
@@ -44,11 +53,42 @@ public class MainActivity extends AppCompatActivity
     MyInformation myInformation;
 
     // 네이버 맵 관련
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
+    private boolean isSearchBusStop;
 
     String str_busNumber;
+
+    String userID, userPass, userName, email, tel, address;
+
+    private void DefaultSetting()
+    {
+        Intent intent = getIntent();
+        userID = intent.getStringExtra("userID");
+        userPass = intent.getStringExtra("userPass");
+        userName = intent.getStringExtra("userName");
+        email = intent.getStringExtra("email");
+        tel = intent.getStringExtra("tel");
+        address = intent.getStringExtra("address");
+
+        reservationFragment.setUserID(userID);
+        reservationFragment.setUserPass(userPass);
+        reservationFragment.setUserName(userName);
+        reservationFragment.setEmail(email);
+        reservationFragment.setTel(tel);
+        reservationFragment.setAddress(address);
+
+        reservationInformation.setUserID(userID);
+        reservationInformation.setUserPass(userPass);
+        reservationInformation.setUserName(userName);
+
+        myInformation.setUserID(userID);
+        myInformation.setUserPass(userPass);
+        myInformation.setUserName(userName);
+        myInformation.setEmail(email);
+        myInformation.setTel(tel);
+        myInformation.setAddress(address);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,14 +96,65 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActivityCompat.requestPermissions(this, PERMISSIONS, 1000);
+        isSearchBusStop = false;
+
         // 프래그먼트 설정
         reservationFragment = new ReservationFragment();
         searchBusStopFragment = new SearchBusStopFragment();
         reservationInformation = new ReservationInformation();
         myInformation = new MyInformation();
 
+        DefaultSetting();
+
         // 네이버 맵 관련
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
+
+        // 상단바 설정
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("예약하기");
+
+        // 바텀네비게이션 설정
+        bottomNavigationView = findViewById(R.id.bottom_menu);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            {
+                switch (item.getItemId())
+                {
+                    case R.id.item1:
+                        isSearchBusStop = false;
+                        getSupportActionBar().setTitle("예약하기");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
+                        return true;
+                    case R.id.item2:
+                        isSearchBusStop = true;
+                        getSupportActionBar().setTitle("정류장찾기");
+                        Location();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusStopFragment).commit();
+                        return true;
+                    case R.id.item3:
+                        isSearchBusStop = false;
+                        getSupportActionBar().setTitle("예약정보");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationInformation).commit();
+                        return true;
+                    case R.id.item4:
+                        isSearchBusStop = false;
+                        getSupportActionBar().setTitle("내정보");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, myInformation).commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    // 위도 경도
+    void Location()
+    {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && isSearchBusStop == true)
         {
             try
             {
@@ -120,42 +211,6 @@ public class MainActivity extends AppCompatActivity
             double longitude = 127.33871827934472;
             searchBusStopFragment.setLocation(longitude, latitude);
         }
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
-
-        // 상단바 설정
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("예약하기");
-
-        // 바텀네비게이션 설정
-        bottomNavigationView = findViewById(R.id.bottom_menu);
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener()
-        {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item)
-            {
-                switch (item.getItemId())
-                {
-                    case R.id.item1:
-                        getSupportActionBar().setTitle("예약하기");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
-                        return true;
-                    case R.id.item2:
-                        getSupportActionBar().setTitle("정류장찾기");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, searchBusStopFragment).commit();
-                        return true;
-                    case R.id.item3:
-                        getSupportActionBar().setTitle("예약정보");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationInformation).commit();
-                        return true;
-                    case R.id.item4:
-                        getSupportActionBar().setTitle("내정보");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, myInformation).commit();
-                        return true;
-                }
-                return false;
-            }
-        });
     }
 
     // 뒤로가기
@@ -189,6 +244,28 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    // 권한 테스트
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+            case 1000:
+            {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+//                    Toast.makeText(this, "승인이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+//                    Toast.makeText(this, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
+                }
+                return;
+            }
 
+        }
+    }
 
 }

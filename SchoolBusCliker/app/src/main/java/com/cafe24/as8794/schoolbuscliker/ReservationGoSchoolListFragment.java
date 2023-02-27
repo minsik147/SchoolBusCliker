@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ public class ReservationGoSchoolListFragment extends Fragment
 {
 
     MainActivity main;
+
+    String userID, userPass, userName, email, tel, address;
+
     Button bt_D1;
 
     public ReservationGoSchoolListFragment()
@@ -52,6 +56,8 @@ public class ReservationGoSchoolListFragment extends Fragment
     {
         View view = inflater.inflate(R.layout.activity_reservation_go_school_list_fragment, container, false);
 
+//        Toast.makeText(main, userID, Toast.LENGTH_SHORT).show();
+
         bt_D1 = view.findViewById(R.id.bt_D1);
 
         bt_D1.setOnClickListener(new View.OnClickListener()
@@ -59,10 +65,47 @@ public class ReservationGoSchoolListFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(main, "D1", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), BusReservation_D1_Date.class);
+                intent.putExtra("userID", userID);
+                intent.putExtra("userPass", userPass);
+                intent.putExtra("userName", userName);
+                intent.putExtra("email", email);
+                intent.putExtra("tel", tel);
+                intent.putExtra("address", address);
+                startActivity(intent);
             }
         });
 
         return view;
+    }
+
+    public void setUserID(String userID)
+    {
+        this.userID = userID;
+    }
+
+    public void setUserPass(String userPass)
+    {
+        this.userPass = userPass;
+    }
+
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public void setTel(String tel)
+    {
+        this.tel = tel;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
     }
 }

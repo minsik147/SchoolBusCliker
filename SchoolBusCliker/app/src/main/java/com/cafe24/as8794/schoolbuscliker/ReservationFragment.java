@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ReservationFragment extends Fragment
 {
@@ -20,6 +21,8 @@ public class ReservationFragment extends Fragment
 
     Button bt_goSchool;
     Button bt_goHome;
+
+    String userID, userPass, userName, email, tel, address;
 
     public ReservationFragment()
     {
@@ -55,6 +58,15 @@ public class ReservationFragment extends Fragment
         reservationGoSchoolListFragment = new ReservationGoSchoolListFragment();
         reservationGoHomeListFragment = new ReservationGoHomeListFragment();
 
+        reservationGoSchoolListFragment.setUserID(userID);
+        reservationGoSchoolListFragment.setUserPass(userPass);
+        reservationGoSchoolListFragment.setUserName(userName);
+        reservationGoSchoolListFragment.setEmail(email);
+        reservationGoSchoolListFragment.setTel(tel);
+        reservationGoSchoolListFragment.setAddress(address);
+
+//        Toast.makeText(main, userID, Toast.LENGTH_SHORT).show();
+
         getChildFragmentManager().beginTransaction().replace(R.id.lin_fragment, reservationGoSchoolListFragment).commit();
 
         bt_goSchool = view.findViewById(R.id.bt_goSchool);
@@ -83,5 +95,35 @@ public class ReservationFragment extends Fragment
         });
 
         return view;
+    }
+
+    public void setUserID(String userID)
+    {
+        this.userID = userID;
+    }
+
+    public void setUserPass(String userPass)
+    {
+        this.userPass = userPass;
+    }
+
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public void setTel(String tel)
+    {
+        this.tel = tel;
+    }
+
+    public void setAddress(String address)
+    {
+        this.address = address;
     }
 }

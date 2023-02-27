@@ -52,6 +52,7 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
 {
     MainActivity main;
     Spinner spinner;
+    int int_selectSpinner;
     Button bt_location;
     String[] str_busList = {"---선택---", "등교버스1번", "등교버스2번", "등교버스3번", "등교버스4번", "등교버스5번", "등교버스6번", "등교버스7번",
             "하교버스1번", "하교버스2번", "하교버스3번", "하교버스4번", "하교버스5번"};
@@ -101,6 +102,11 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.activity_serach_bus_stop_fragment, container, false);
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED)
+        {
+            Toast.makeText(main, "위치 권한을 허용하지 않았습니다. 설정에서 확인해주세요.", Toast.LENGTH_SHORT).show();
+        }
 
         bt_location = view.findViewById(R.id.btn_location);
         spinner = view.findViewById(R.id.sp_busList);
@@ -182,14 +188,26 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     {
         this.naverMap = naverMap;
 
-        LocationPoint();
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_DENIED)
+        {
+            LocationPoint();
+        }
+
         naverMap.setLocationSource(locationSource);
         CameraUpdate();
     }
 
     void CameraUpdate()
     {
-        CameraUpdate cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(latitude, longitude), 15).animate(CameraAnimation.Fly, 1000);;
+        CameraUpdate cameraUpdate;
+        if(longitude >= 132.237046884194 || longitude <= 123.1619757570789)
+        {
+            cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.35052536396161, 127.38484035032442), 11).animate(CameraAnimation.Fly, 1000);;
+        }
+        else
+        {
+            cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(latitude, longitude), 15).animate(CameraAnimation.Fly, 1000);;
+        }
 //        CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(36.30755055344865, 127.36541690338018));
         naverMap.moveCamera(cameraUpdate);
     }
