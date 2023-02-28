@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,9 +35,12 @@ public class ReservationInformation extends Fragment
     MainActivity main;
 
     AdapterRecyclerReservation adapter = null;
-    RecyclerView recyclerView = null;
+    RecyclerViewEmptySupport recyclerView = null;
     ArrayList<itemReservationCheck> list;
     String userID, userPass, userName, email, tel, address;
+
+    TextView tv_empty;
+    int int_dataCount;
 
     public ReservationInformation()
     {
@@ -68,6 +73,9 @@ public class ReservationInformation extends Fragment
     {
         View view = inflater.inflate(R.layout.activity_reservation_information, container, false);
 
+        int_dataCount = 0;
+        tv_empty = view.findViewById(R.id.tv_empty);
+
         recyclerView = view.findViewById(R.id.recycler);
         list = new ArrayList<>();
 
@@ -75,6 +83,9 @@ public class ReservationInformation extends Fragment
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+
+        recyclerView.setVisibility(View.GONE);
+        tv_empty.setVisibility(View.VISIBLE);
 
         DataLode();
 
@@ -109,6 +120,18 @@ public class ReservationInformation extends Fragment
                         {
                             list.add(0, new itemReservationCheck(start, end, bus, date, id, isBoarding));
                             adapter.notifyItemInserted(0);
+                            int_dataCount++;
+                        }
+
+                        if (int_dataCount == 0)
+                        {
+                            recyclerView.setVisibility(View.GONE);
+                            tv_empty.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            tv_empty.setVisibility(View.GONE);
                         }
                     }
                 }

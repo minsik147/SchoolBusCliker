@@ -1,7 +1,10 @@
 package com.cafe24.as8794.schoolbuscliker;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +30,10 @@ import java.util.ArrayList;
 public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecyclerReservation.ViewHolder>
 {
     MainActivity main;
+    ReservationInformation reservationInformation;
     int ID;
     private ArrayList<itemReservationCheck> data = null;
-
-    Button btn_cancel, btn_OK;
-    LinearLayout lin_1, lin_2;
+    LinearLayout lin_1, lin_2, lin_3;
 
     public AdapterRecyclerReservation(ArrayList<itemReservationCheck> data)
     {
@@ -54,7 +56,7 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
 
     // onBindViewHolder : position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         itemReservationCheck item = data.get(position);
 
@@ -64,7 +66,6 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
         holder.date.setText(item.getDate());
         holder.id.setText(item.getId()+"");
 
-
         String sta = item.getIsBoarding()+"";
         if (sta.equals("미탑승"))
         {
@@ -73,6 +74,7 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
 //            btn_OK.setVisibility(View.INVISIBLE);
             lin_1.setVisibility(View.GONE);
             lin_2.setVisibility(View.GONE);
+            lin_3.setVisibility(View.VISIBLE);
         }
 
         if (sta.equals("탑승 완료"))
@@ -82,9 +84,125 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
 //            btn_OK.setVisibility(View.INVISIBLE);
             lin_1.setVisibility(View.GONE);
             lin_2.setVisibility(View.GONE);
+            lin_3.setVisibility(View.VISIBLE);
         }
 
         holder.state.setText(item.getIsBoarding()+"");
+
+        holder.cancel.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(holder.id.getContext());
+                builder.setTitle("예약 취소");
+                builder.setMessage("예약을 취소할까요?");
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        ID = Integer.parseInt((String)holder.id.getText().toString());
+                        Response.Listener<String> responseListener = new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response)
+                            {
+                                try
+                                {
+                                    // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
+                                    System.out.println("hongchul" + response);
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if (success)
+                                    { // 성공
+                                        Toast.makeText(holder.id.getContext(), "예약을 취소했어요.",Toast.LENGTH_SHORT).show();
+                                        removeItem(position);
+                                    } else
+                                    { // 실패
+
+                                    }
+                                } catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        };
+                        RequestDelete requestDelete = new RequestDelete(ID, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(holder.id.getContext().getApplicationContext());
+                        queue.add(requestDelete);
+                    }
+                });
+                builder.setNegativeButton("아니오", null);
+                builder.create().show();
+            }
+        });
+
+        holder.delete.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View _view)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(holder.id.getContext());
+                builder.setTitle("탑승 내역 삭제");
+                builder.setMessage("탑승 내역을 삭제할까요?");
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        ID = Integer.parseInt((String)holder.id.getText().toString());
+                        Response.Listener<String> responseListener = new Response.Listener<String>()
+                        {
+                            @Override
+                            public void onResponse(String response)
+                            {
+                                try
+                                {
+                                    // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
+                                    System.out.println("hongchul" + response);
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    boolean success = jsonObject.getBoolean("success");
+                                    if (success)
+                                    { // 성공
+                                        Toast.makeText(holder.id.getContext(), "내역을 삭제했어요.",Toast.LENGTH_SHORT).show();
+                                        removeItem(position);
+                                    } else
+                                    { // 실패
+
+                                    }
+                                } catch (JSONException e)
+                                {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        };
+                        RequestDelete requestDelete = new RequestDelete(ID, responseListener);
+                        RequestQueue queue = Volley.newRequestQueue(holder.id.getContext().getApplicationContext());
+                        queue.add(requestDelete);
+                    }
+                });
+                builder.setNegativeButton("아니오", null);
+                builder.create().show();
+            }
+        });
+        
+        holder.check.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Toast.makeText(holder.id.getContext(), "여기에 QR 코드 스캔 화면 띄울거임", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void removeItem(int position)
+    {
+        data.remove(position);
+        notifyDataSetChanged();
     }
 
     // getItemCount : 전체 데이터의 개수를 리턴
@@ -100,6 +218,7 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
     {
         EditText start, end, bus, date;
         TextView id, state;
+        Button cancel, delete, check;
 
         ViewHolder(View view)
         {
@@ -110,11 +229,14 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
             date = view.findViewById(R.id.et_date);
             id = view.findViewById(R.id.tv_id);
             state = view.findViewById(R.id.tv_state);
-            btn_cancel = view.findViewById(R.id.btn_Cancel);
-            btn_OK = view.findViewById(R.id.btn_OK);
+
+            cancel = view.findViewById(R.id.btn_Cancel);
+            delete = view.findViewById(R.id.btn_delete);
+            check = view.findViewById(R.id.btn_OK);
 
             lin_1 = view.findViewById(R.id.lin_1);
             lin_2 = view.findViewById(R.id.lin_2);
+            lin_3 = view.findViewById(R.id.lin_3);
         }
     }
 }

@@ -28,6 +28,7 @@
                     android:background="@drawable/selector_button"/>
 
                 <Button
+                    android:id="@+id/bt_D2"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -43,6 +44,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_D3"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -51,6 +53,7 @@
                     android:background="@drawable/selector_button"/>
 
                 <Button
+                    android:id="@+id/bt_D4"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -66,6 +69,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_D5"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -74,6 +78,7 @@
                     android:background="@drawable/selector_button"/>
 
                 <Button
+                    android:id="@+id/bt_D6"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -89,6 +94,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_D7"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -104,6 +110,31 @@
                     android:layout_margin="7dp"
                     android:background="@drawable/selector_button"
                     android:visibility="invisible" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/bt_DI1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="등교시외버스1번"
+                    android:layout_margin="7dp"
+                    android:background="@drawable/selector_button"/>
+
+                <Button
+                    android:id="@+id/bt_DI2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:text="등교시외버스2번"
+                    android:layout_margin="7dp"
+                    android:background="@drawable/selector_button"/>
 
             </LinearLayout>
 

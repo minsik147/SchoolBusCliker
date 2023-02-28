@@ -72,6 +72,8 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     Marker[] marker_D1;
     Marker[] marker_D2;
 
+    boolean isLocation;
+
     public SearchBusStopFragment()
     {
         super();
@@ -110,6 +112,8 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
 
         bt_location = view.findViewById(R.id.btn_location);
         spinner = view.findViewById(R.id.sp_busList);
+
+        isLocation = false;
 
         // 현재 위치
         locationSource = new FusedLocationSource(main, LOCATION_PERMISSION_REQUEST_CODE);
@@ -200,9 +204,9 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     void CameraUpdate()
     {
         CameraUpdate cameraUpdate;
-        if(longitude >= 132.237046884194 || longitude <= 123.1619757570789)
+        if((longitude >= 132.237046884194 || longitude <= 123.1619757570789))
         {
-            cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.35052536396161, 127.38484035032442), 11).animate(CameraAnimation.Fly, 1000);;
+            cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.35052536396161, 127.38484035032442), 11).animate(CameraAnimation.Fly, 1000);
         }
         else
         {

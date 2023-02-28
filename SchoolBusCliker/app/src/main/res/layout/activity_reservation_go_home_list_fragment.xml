@@ -19,6 +19,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_H1"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -27,6 +28,7 @@
                     android:background="@drawable/selector_button"/>
 
                 <Button
+                    android:id="@+id/bt_H2"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -42,6 +44,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_H3"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -50,6 +53,7 @@
                     android:background="@drawable/selector_button"/>
 
                 <Button
+                    android:id="@+id/bt_H4"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
@@ -65,6 +69,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_H5"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"

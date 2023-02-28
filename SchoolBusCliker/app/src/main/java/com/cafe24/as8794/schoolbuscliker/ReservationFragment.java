@@ -1,9 +1,17 @@
+
+/*
+
+
+
+*/
+
 package com.cafe24.as8794.schoolbuscliker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -65,7 +73,12 @@ public class ReservationFragment extends Fragment
         reservationGoSchoolListFragment.setTel(tel);
         reservationGoSchoolListFragment.setAddress(address);
 
-//        Toast.makeText(main, userID, Toast.LENGTH_SHORT).show();
+        reservationGoHomeListFragment.setUserID(userID);
+        reservationGoHomeListFragment.setUserPass(userPass);
+        reservationGoHomeListFragment.setUserName(userName);
+        reservationGoHomeListFragment.setEmail(email);
+        reservationGoHomeListFragment.setTel(tel);
+        reservationGoHomeListFragment.setAddress(address);
 
         getChildFragmentManager().beginTransaction().replace(R.id.lin_fragment, reservationGoSchoolListFragment).commit();
 

@@ -18,10 +18,19 @@
         android:theme="@style/Theme.SchoolBusCliker"
         tools:targetApi="31">
         <activity
-            android:name=".BusReservation_D1_BusStop"
+            android:name=".BusReservation_H_BusStop"
             android:exported="false" />
         <activity
-            android:name=".BusReservation_D1_Date"
+            android:name=".BusReservation_H_Date"
+            android:exported="false" />
+        <activity
+            android:name=".BusReservation_D_BusStop"
+            android:exported="false" />
+        <activity
+            android:name=".BusReservation_D_Date"
+            android:exported="false" />
+        <activity
+            android:name=".MaBusReservation_D3_BusStop"
             android:exported="false" />
         <activity
             android:name=".ReservationGoHomeListFragment"

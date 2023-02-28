@@ -1,3 +1,15 @@
+
+/*
+
+    ### 23-02-16 ###
+    메인 페이지
+    실제 기능이 이뤄질 공간
+    프래그먼트 뿌려줌 (예약하기, 정류장찾기, 예약정보, 내정보
+    
+    이제 왠만하면 건들일 일 없는 액티비티
+
+ */
+
 package com.cafe24.as8794.schoolbuscliker;
 
 import static androidx.core.content.ContextCompat.getSystemService;
@@ -36,6 +48,7 @@ import com.naver.maps.map.util.FusedLocationSource;
 
 public class MainActivity extends AppCompatActivity
 {
+    // 위치 권한 얻어오기 위한 변수들
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1981;
     private static final int REQUEST_CODE_LOCATION_SETTINGS = 2981;
@@ -45,22 +58,21 @@ public class MainActivity extends AppCompatActivity
                     Manifest.permission.ACCESS_COARSE_LOCATION
             };
 
+    // 바텀 네비게이션 제어 변수
     BottomNavigationView bottomNavigationView;
 
-    ReservationFragment reservationFragment;
-    SearchBusStopFragment searchBusStopFragment;
-    ReservationInformation reservationInformation;
-    MyInformation myInformation;
+    // 프래그먼트 제어 변수
+    ReservationFragment reservationFragment; // 등교, 하교 리스트 버튼 프래그먼트
+    SearchBusStopFragment searchBusStopFragment; // 정류장찾기 프래그먼트
+    ReservationInformation reservationInformation; // 예약정보 프래그먼트
+    MyInformation myInformation; // 내정보 프래그먼트
 
-    // 네이버 맵 관련
-    private FusedLocationSource locationSource;
-    private NaverMap naverMap;
-    private boolean isSearchBusStop;
+    private boolean isSearchBusStop; // 정류장 찾기 프래그먼트를 실행하였는지
 
-    String str_busNumber;
-
+    // 회원 정보
     String userID, userPass, userName, email, tel, address;
 
+    // 인텐트로 넘어온 회원정보 얻어오기
     private void DefaultSetting()
     {
         Intent intent = getIntent();
@@ -71,6 +83,8 @@ public class MainActivity extends AppCompatActivity
         tel = intent.getStringExtra("tel");
         address = intent.getStringExtra("address");
 
+        
+        // 얻어온 회원정보 프래그먼트 내부로 뿌리기
         reservationFragment.setUserID(userID);
         reservationFragment.setUserPass(userPass);
         reservationFragment.setUserName(userName);
@@ -96,6 +110,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 액티비티 전환 애니메이션
+        overridePendingTransition(R.anim.fadein, R.anim.none);
+
+        // 위치 권한 얻어오기
         ActivityCompat.requestPermissions(this, PERMISSIONS, 1000);
         isSearchBusStop = false;
 
@@ -105,9 +123,9 @@ public class MainActivity extends AppCompatActivity
         reservationInformation = new ReservationInformation();
         myInformation = new MyInformation();
 
-        DefaultSetting();
+        DefaultSetting(); // 인텐트로 넘어온 회원정보 얻어오기
 
-        // 네이버 맵 관련
+        // 초기 프래그먼트 설정하기 (등교, 하교 버튼 리스트)
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
 
         // 상단바 설정
@@ -150,12 +168,11 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    // 위도 경도
+    // 위도 경도 얻어오기
     void Location()
     {
-        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-            && isSearchBusStop == true)
-        {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        { // 위치 권한 승인되었으면
             try
             {
                 LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -172,7 +189,6 @@ public class MainActivity extends AppCompatActivity
 
                         String str = "위도 : " + longitude + "\n" + "경도 : " + latitude + "\n" + "고도  : " + altitude;
 
-//                    Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
                         searchBusStopFragment.setLocation(longitude, latitude);
                         try
                         {
@@ -180,10 +196,8 @@ public class MainActivity extends AppCompatActivity
                         }
                         catch (Exception e)
                         {
-                            // Toast.makeText(MainActivity.this, e + "", Toast.LENGTH_SHORT).show();
+
                         }
-
-
                     }
 
                     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -206,7 +220,7 @@ public class MainActivity extends AppCompatActivity
 
         }
         else
-        {
+        { // 위치 권한 거부됨
             double latitude = 36.32588035150573;
             double longitude = 127.33871827934472;
             searchBusStopFragment.setLocation(longitude, latitude);
@@ -244,7 +258,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    // 권한 테스트
+    // 위치 권한 처리
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
@@ -256,11 +270,11 @@ public class MainActivity extends AppCompatActivity
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 {
-//                    Toast.makeText(this, "승인이 허가되어 있습니다.", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, "위치 권한 승인됨", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-//                    Toast.makeText(this, "아직 승인받지 않았습니다.", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, "위치 권한 거부됨", Toast.LENGTH_LONG).show();
                 }
                 return;
             }

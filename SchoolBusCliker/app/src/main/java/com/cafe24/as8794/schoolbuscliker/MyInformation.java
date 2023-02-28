@@ -63,10 +63,11 @@ public class MyInformation extends Fragment
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(getActivity(), "로그아웃하였습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "로그아웃했어요", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 main.finish();
+                main.overridePendingTransition(R.anim.none, R.anim.fadeout);
             }
         });
         return view;

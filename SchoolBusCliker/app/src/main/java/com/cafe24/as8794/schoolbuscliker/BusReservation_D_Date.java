@@ -3,16 +3,14 @@ package com.cafe24.as8794.schoolbuscliker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,13 +18,13 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class BusReservation_D1_Date extends AppCompatActivity
+public class BusReservation_D_Date extends AppCompatActivity
 {
     CalendarView calendarView;
     TextView tv_string;
-    TextView tv_date;
+    TextView tv_state;
     Button bt_next;
-    String userID, userPass, userName, email, tel, address;
+    String userID, userPass, userName, email, tel, address, busNumber;
     String date;
 
     private void DefaultSetting()
@@ -38,27 +36,29 @@ public class BusReservation_D1_Date extends AppCompatActivity
         email = intent.getStringExtra("email");
         tel = intent.getStringExtra("tel");
         address = intent.getStringExtra("address");
+        busNumber = intent.getStringExtra("busNumber");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bus_reservation_d1_date);
+        setContentView(R.layout.activity_bus_reservation_d_date);
 
         DefaultSetting();
 
         // 상단바 설정
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("예약하기");
+        getSupportActionBar().setTitle(busNumber + " 예약하기");
 
         calendarView = findViewById(R.id.calender);
 
         tv_string = findViewById(R.id.tv_string);
-        tv_date = findViewById(R.id.tv_date);
+        tv_state = findViewById(R.id.tv_state);
         bt_next = findViewById(R.id.bt_next);
 
         tv_string.setText(userName + "님, 예약해볼까요?");
+
 
         // 날짜 받아오기
         Calendar calender = Calendar.getInstance();
@@ -70,8 +70,8 @@ public class BusReservation_D1_Date extends AppCompatActivity
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
         date = simpleDateFormat.format(mDate);
-
-        tv_date.setText(date);
+        tv_state.setText(date);
+        tv_state.setTextColor(Color.parseColor("#000000"));
 
         String weekDate_ = dayFormat.format(now_time);
 
@@ -95,10 +95,14 @@ public class BusReservation_D1_Date extends AppCompatActivity
 
                 if(weekDate.equals("토요일") || weekDate.equals("일요일"))
                 {
+                    tv_state.setText("주말은 예약할 수 없어요!");
+                    tv_state.setTextColor(0xFFD30E00);
                     bt_next.setEnabled(false);
+                    return;
                 }
                 else
                 {
+                    tv_state.setTextColor(Color.parseColor("#000000"));
                     bt_next.setEnabled(true);
                 }
 
@@ -125,7 +129,7 @@ public class BusReservation_D1_Date extends AppCompatActivity
                 }
 
                 date = str_year + str_month + str_day;
-                tv_date.setText(date);
+                tv_state.setText(date);
             }
         });
 
@@ -134,14 +138,16 @@ public class BusReservation_D1_Date extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getApplicationContext(), BusReservation_D1_BusStop.class);
+
+                Intent intent = new Intent(getApplicationContext(), BusReservation_D_BusStop.class);
                 intent.putExtra("userID", userID);
                 intent.putExtra("userPass", userPass);
                 intent.putExtra("userName", userName);
                 intent.putExtra("email", email);
                 intent.putExtra("tel", tel);
                 intent.putExtra("address", address);
-                intent.putExtra("date", date);
+                intent.putExtra("date", tv_state.getText().toString());
+                intent.putExtra("busNumber", busNumber);
                 startActivity(intent);
                 finish();
             }
@@ -158,5 +164,16 @@ public class BusReservation_D1_Date extends AppCompatActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+
+        if(isFinishing())
+        {
+            overridePendingTransition(R.anim.none, R.anim.horizon_exit);
+        }
     }
 }
