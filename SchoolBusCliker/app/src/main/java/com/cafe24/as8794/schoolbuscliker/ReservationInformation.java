@@ -80,7 +80,10 @@ public class ReservationInformation extends Fragment
         list = new ArrayList<>();
 
         adapter = new AdapterRecyclerReservation(list);
+
         recyclerView.setAdapter(adapter);
+
+        ((MainActivity)MainActivity.context_main).setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 

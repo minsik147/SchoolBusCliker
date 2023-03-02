@@ -15,6 +15,7 @@ package com.cafe24.as8794.schoolbuscliker;
 import static androidx.core.content.ContextCompat.getSystemService;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +26,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -41,13 +43,42 @@ import android.widget.Toast;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.util.FusedLocationSource;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity
 {
+
+    public static Context context_main;
+
+    AdapterRecyclerReservation adapter = null;
+    @NonNull AdapterRecyclerReservation.ViewHolder holder;
+    @SuppressLint("RecyclerView") int position;
+
+    public void setAdapter(AdapterRecyclerReservation adapter)
+    {
+        this.adapter = adapter;
+    }
+
+    public void setHolder(@NonNull AdapterRecyclerReservation.ViewHolder holder)
+    {
+        this.holder = holder;
+    }
+
+    public void setPosition(@SuppressLint("RecyclerView") int position)
+    {
+        this.position = position;
+    }
+
+    public String str;
+
     // 위치 권한 얻어오기 위한 변수들
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
     private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 1981;
@@ -109,6 +140,8 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context_main = this;
 
         // 액티비티 전환 애니메이션
         overridePendingTransition(R.anim.fadein, R.anim.none);
@@ -281,5 +314,31 @@ public class MainActivity extends AppCompatActivity
 
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null)
+        {
+            //qrcode 가 없으면
+            if (result.getContents() == null)
+            {
+                Toast.makeText(MainActivity.this, "취소!", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                //qrcode 결과가 있으면
+//                Toast.makeText(MainActivity.this, result.getContents() + "", Toast.LENGTH_SHORT).show();
+                str = result.getContents();
+                adapter.onBindViewHolder(holder, position);
+            }
+        }
+        else
+        {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
 
 }

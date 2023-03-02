@@ -36,7 +36,7 @@
 
             <TextView
                 android:layout_marginTop="10dp"
-                android:text="언제 버스를 탑승할 계획이신가요?"
+                android:text="언제 버스를 타시나요?"
                 android:textSize="20dp"
                 android:gravity="center"
                 android:layout_width="match_parent"

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +37,10 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
     int ID;
     private ArrayList<itemReservationCheck> data = null;
     LinearLayout lin_1, lin_2, lin_3;
+
+    private IntentIntegrator qrScan;
+
+    String str;
 
     public AdapterRecyclerReservation(ArrayList<itemReservationCheck> data)
     {
@@ -65,6 +72,20 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
         holder.bus.setText(item.getBus());
         holder.date.setText(item.getDate());
         holder.id.setText(item.getId()+"");
+
+        str = ((MainActivity)MainActivity.context_main).str + "";
+
+        if (str != null && holder.state.getText().toString().equals("탑승 전"))
+        {
+//            Toast.makeText(holder.id.getContext(), str + "", Toast.LENGTH_SHORT).show();
+            if (holder.bus.getText().toString().equals(str))
+            {
+//                Toast.makeText(holder.id.getContext(), str + "", Toast.LENGTH_SHORT).show();
+                holder.state.setText("탑승 완료");
+                Toast.makeText(holder.id.getContext(), holder.bus.getText().toString()+" 탑승 처리 예정", Toast.LENGTH_SHORT).show();
+                Toast.makeText(holder.id.getContext(), holder.bus.getText().toString()+" 탑승 처리 예정", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         String sta = item.getIsBoarding()+"";
         if (sta.equals("미탑승"))
@@ -188,13 +209,19 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
                 builder.create().show();
             }
         });
-        
+
+        qrScan = new IntentIntegrator(((MainActivity)MainActivity.context_main));
+
         holder.check.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(holder.id.getContext(), "여기에 QR 코드 스캔 화면 띄울거임", Toast.LENGTH_SHORT).show();
+                ((MainActivity)MainActivity.context_main).setHolder(holder);
+                ((MainActivity)MainActivity.context_main).setPosition(position);
+                //scan option
+                qrScan.setPrompt("Scanning...");
+                qrScan.initiateScan();
             }
         });
     }
