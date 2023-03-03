@@ -73,47 +73,6 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
         holder.date.setText(item.getDate());
         holder.id.setText(item.getId()+"");
 
-        str = ((MainActivity)MainActivity.context_main).str + "";
-
-        if (str != null && holder.state.getText().toString().equals("탑승 전"))
-        {
-//            Toast.makeText(holder.id.getContext(), str + "", Toast.LENGTH_SHORT).show();
-            if (holder.bus.getText().toString().equals(str))
-            {
-//                Toast.makeText(holder.id.getContext(), str + "", Toast.LENGTH_SHORT).show();
-                ID = Integer.parseInt((String)holder.id.getText().toString());
-                Response.Listener<String> responseListener = new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response)
-                    {
-                        try
-                        {
-                            // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
-                            System.out.println("hongchul" + response);
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success)
-                            { // 성공
-                                Toast.makeText(holder.id.getContext(), "예약을 취소했어요.",Toast.LENGTH_SHORT).show();
-                                removeItem(position);
-                            } else
-                            { // 실패
-
-                            }
-                        } catch (JSONException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-
-                };
-                RequestUpdate requestUpdate = new RequestUpdate(ID, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(holder.id.getContext().getApplicationContext());
-                queue.add(requestUpdate);
-            }
-        }
-
         String sta = item.getIsBoarding()+"";
         if (sta.equals("미탑승"))
         {
@@ -244,8 +203,11 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
             @Override
             public void onClick(View view)
             {
-                ((MainActivity)MainActivity.context_main).setHolder(holder);
-                ((MainActivity)MainActivity.context_main).setPosition(position);
+//                ((MainActivity)MainActivity.context_main).setHolder(holder);
+//                ((MainActivity)MainActivity.context_main).setPosition(position);
+                ((MainActivity)MainActivity.context_main).setBus_Number(holder.bus.getText().toString());
+                ((MainActivity)MainActivity.context_main).setIsBoarding(holder.state.getText().toString());
+                ((MainActivity)MainActivity.context_main).setID(item.getId());
                 //scan option
                 qrScan.setPrompt("Scanning...");
                 qrScan.initiateScan();

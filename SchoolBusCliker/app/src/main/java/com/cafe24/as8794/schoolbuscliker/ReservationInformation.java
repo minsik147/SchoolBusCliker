@@ -83,8 +83,6 @@ public class ReservationInformation extends Fragment
 
         recyclerView.setAdapter(adapter);
 
-        ((MainActivity)MainActivity.context_main).setAdapter(adapter);
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
         recyclerView.setVisibility(View.GONE);

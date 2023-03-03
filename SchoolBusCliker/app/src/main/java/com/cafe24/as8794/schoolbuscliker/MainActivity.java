@@ -40,6 +40,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -55,27 +58,7 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity
 {
-
     public static Context context_main;
-
-    AdapterRecyclerReservation adapter = null;
-    @NonNull AdapterRecyclerReservation.ViewHolder holder;
-    @SuppressLint("RecyclerView") int position;
-
-    public void setAdapter(AdapterRecyclerReservation adapter)
-    {
-        this.adapter = adapter;
-    }
-
-    public void setHolder(@NonNull AdapterRecyclerReservation.ViewHolder holder)
-    {
-        this.holder = holder;
-    }
-
-    public void setPosition(@SuppressLint("RecyclerView") int position)
-    {
-        this.position = position;
-    }
 
     public String str;
 
@@ -315,6 +298,25 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    int ID;
+    String BUS_NUMBER;
+    String isBoarding;
+
+    void setID(int ID)
+    {
+        this.ID = ID;
+    }
+
+    void setBus_Number(String bus_number)
+    {
+        BUS_NUMBER = bus_number;
+    }
+
+    void setIsBoarding(String isBoarding)
+    {
+        this.isBoarding = isBoarding;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
@@ -324,14 +326,47 @@ public class MainActivity extends AppCompatActivity
             //qrcode 가 없으면
             if (result.getContents() == null)
             {
-                Toast.makeText(MainActivity.this, "취소!", Toast.LENGTH_SHORT).show();
             }
             else
             {
                 //qrcode 결과가 있으면
-//                Toast.makeText(MainActivity.this, result.getContents() + "", Toast.LENGTH_SHORT).show();
-                str = result.getContents();
-                adapter.onBindViewHolder(holder, position);
+                str = result.getContents() + "";
+
+//                Toast.makeText(getApplicationContext(), BUS_NUMBER + ", " + str + ", " + isBoarding, Toast.LENGTH_SHORT).show();
+
+                if (BUS_NUMBER.equals(str) && isBoarding.equals("탑승 전"))
+                {
+                    Response.Listener<String> responseListener = new Response.Listener<String>()
+                    {
+                        @Override
+                        public void onResponse(String response)
+                        {
+                            try
+                            {
+                                // TODO : 인코딩 문제때문에 한글 DB인 경우 로그인 불가
+                                System.out.println("hongchul" + response);
+                                JSONObject jsonObject = new JSONObject(response);
+                                boolean success = jsonObject.getBoolean("success");
+                                if (success)
+                                { // 성공
+                                    Toast.makeText(getApplicationContext(), "탑승이 확인되었어요.",Toast.LENGTH_SHORT).show();
+//                                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
+                                    getSupportFragmentManager().beginTransaction().detach(reservationInformation).attach(reservationInformation).commit();
+                                } else
+                                { // 실패
+                                    Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    };
+                    RequestUpdate requestUpdate = new RequestUpdate(ID, responseListener);
+                    RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                    queue.add(requestUpdate);
+                }
             }
         }
         else
