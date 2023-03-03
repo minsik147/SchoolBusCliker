@@ -38,10 +38,14 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -53,8 +57,11 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.util.FusedLocationSource;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -85,6 +92,8 @@ public class MainActivity extends AppCompatActivity
 
     // 회원 정보
     String userID, userPass, userName, email, tel, address;
+
+    int int_dataCount;
 
     // 인텐트로 넘어온 회원정보 얻어오기
     private void DefaultSetting()
@@ -125,6 +134,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         context_main = this;
+
+        int_dataCount = 0;
 
         // 액티비티 전환 애니메이션
         overridePendingTransition(R.anim.fadein, R.anim.none);
@@ -317,6 +328,34 @@ public class MainActivity extends AppCompatActivity
         this.isBoarding = isBoarding;
     }
 
+    
+    // QR 코드 스캔 처리
+
+    ArrayList<itemReservationCheck> list;
+    AdapterRecyclerReservation adapter = null;
+    RecyclerViewEmptySupport recyclerView = null;
+    TextView tv_empty;
+
+    void setList(ArrayList<itemReservationCheck> list)
+    {
+        this.list = list;
+    }
+
+    void setAdapter(AdapterRecyclerReservation adapter)
+    {
+        this.adapter = adapter;
+    }
+
+    void setRecyclerView(RecyclerViewEmptySupport recyclerView)
+    {
+        this.recyclerView = recyclerView;
+    }
+
+    void setTextView(TextView tv_empty)
+    {
+        this.tv_empty = tv_empty;
+    }
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
@@ -351,7 +390,8 @@ public class MainActivity extends AppCompatActivity
                                 { // 성공
                                     Toast.makeText(getApplicationContext(), "탑승이 확인되었어요.",Toast.LENGTH_SHORT).show();
 //                                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment, reservationFragment).commit();
-                                    getSupportFragmentManager().beginTransaction().detach(reservationInformation).attach(reservationInformation).commit();
+                                    DataLode();
+                                    adapter.notifyDataSetChanged();
                                 } else
                                 { // 실패
                                     Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
@@ -367,12 +407,82 @@ public class MainActivity extends AppCompatActivity
                     RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                     queue.add(requestUpdate);
                 }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), "예약정보와 버스가 다른거 같아요...", Toast.LENGTH_SHORT).show();
+                }
             }
         }
         else
         {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    void DataLode()
+    {
+        list.clear();
+        adapter.notifyDataSetChanged();
+
+        String serverUrl = "https://as8794.cafe24.com/new_bus_clicker/get_json/get_json_bus_city.php";
+
+        int_dataCount = 0;
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, serverUrl, null, new Response.Listener<JSONArray>()
+        {
+            @Override
+            public void onResponse(JSONArray response)
+            {
+                try
+                {
+                    for (int i = 0; i < response.length(); i++)
+                    {
+                        JSONObject jsonObject = response.getJSONObject(i);
+                        String userId = jsonObject.getString("userID");
+                        String start = jsonObject.getString("start");
+                        String end = jsonObject.getString("end");
+                        String bus = jsonObject.getString("busNumber");
+                        String date = jsonObject.getString("date");
+                        int id = Integer.parseInt(jsonObject.getString("id"));
+                        String isBoarding = jsonObject.getString("isBoarding");
+
+                        if(userId.equals(userID))
+                        {
+                            list.add(0, new itemReservationCheck(start, end, bus, date, id, isBoarding));
+                            adapter.notifyItemInserted(0);
+                            int_dataCount++;
+                        }
+
+                        if (int_dataCount == 0)
+                        {
+                            recyclerView.setVisibility(View.GONE);
+                            tv_empty.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            tv_empty.setVisibility(View.GONE);
+                        }
+                    }
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener()
+        {
+            @Override
+            public void onErrorResponse(VolleyError error)
+            {
+                Toast.makeText(getApplicationContext(), "에러", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+        requestQueue.add(jsonArrayRequest);
+
     }
 
 

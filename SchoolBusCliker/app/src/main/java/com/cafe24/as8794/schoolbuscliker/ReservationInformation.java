@@ -78,8 +78,12 @@ public class ReservationInformation extends Fragment
 
         recyclerView = view.findViewById(R.id.recycler);
         list = new ArrayList<>();
-
         adapter = new AdapterRecyclerReservation(list);
+
+        ((MainActivity)MainActivity.context_main).setList(list);
+        ((MainActivity)MainActivity.context_main).setAdapter(adapter);
+        ((MainActivity)MainActivity.context_main).setRecyclerView(recyclerView);
+        ((MainActivity)MainActivity.context_main).setTextView(tv_empty);
 
         recyclerView.setAdapter(adapter);
 
@@ -89,8 +93,8 @@ public class ReservationInformation extends Fragment
         tv_empty.setVisibility(View.VISIBLE);
 
         DataLode();
-
         adapter.notifyDataSetChanged();
+
 
         return view;
     }

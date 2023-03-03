@@ -101,6 +101,11 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
             @Override
             public void onClick(View view)
             {
+                if (holder.state.getText().toString().equals("탑승 완료"))
+                {
+                    Toast.makeText(holder.id.getContext(), "이미 탑승이 확인되었어요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.id.getContext());
                 builder.setTitle("예약 취소");
                 builder.setMessage("예약을 취소할까요?");
@@ -124,7 +129,8 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
                                     if (success)
                                     { // 성공
                                         Toast.makeText(holder.id.getContext(), "예약을 취소했어요.",Toast.LENGTH_SHORT).show();
-                                        removeItem(position);
+
+                                        ((MainActivity)MainActivity.context_main).DataLode();
                                     } else
                                     { // 실패
 
@@ -174,7 +180,8 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
                                     if (success)
                                     { // 성공
                                         Toast.makeText(holder.id.getContext(), "내역을 삭제했어요.",Toast.LENGTH_SHORT).show();
-                                        removeItem(position);
+
+                                        ((MainActivity)MainActivity.context_main).DataLode();
                                     } else
                                     { // 실패
 
@@ -203,13 +210,18 @@ public class AdapterRecyclerReservation extends RecyclerView.Adapter<AdapterRecy
             @Override
             public void onClick(View view)
             {
+                if (holder.state.getText().toString().equals("탑승 완료"))
+                {
+                    Toast.makeText(holder.id.getContext(), "이미 탑승이 확인되었어요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 //                ((MainActivity)MainActivity.context_main).setHolder(holder);
 //                ((MainActivity)MainActivity.context_main).setPosition(position);
                 ((MainActivity)MainActivity.context_main).setBus_Number(holder.bus.getText().toString());
                 ((MainActivity)MainActivity.context_main).setIsBoarding(holder.state.getText().toString());
                 ((MainActivity)MainActivity.context_main).setID(item.getId());
                 //scan option
-                qrScan.setPrompt("Scanning...");
+                qrScan.setPrompt("QR 코드를 인식해주세요.");
                 qrScan.initiateScan();
             }
         });
