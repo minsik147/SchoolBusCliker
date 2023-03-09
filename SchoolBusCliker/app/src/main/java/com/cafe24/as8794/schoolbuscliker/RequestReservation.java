@@ -15,7 +15,7 @@ public class RequestReservation extends StringRequest
     final static private String URL = "https://as8794.cafe24.com/new_bus_clicker/user_management/bus_city_reservation.php";
     private Map<String, String> map;
 
-    public RequestReservation(String userID, String userName, String busNumber, String date, String start, String end, String isBoarding, Response.Listener<String> listener)
+    public RequestReservation(String userID, String userName, String busNumber, String date, String start, String end, String isBoarding, String ExpiredDate, Response.Listener<String> listener)
     {
         super(Method.POST, URL, listener, null);
 
@@ -27,6 +27,7 @@ public class RequestReservation extends StringRequest
         map.put("start", start);
         map.put("end", end);
         map.put("isBoarding", isBoarding);
+        map.put("ExpiredDate", ExpiredDate);
     }
 
     public RequestReservation(int method, String url, Response.Listener<String> listener, @Nullable Response.ErrorListener errorListener)

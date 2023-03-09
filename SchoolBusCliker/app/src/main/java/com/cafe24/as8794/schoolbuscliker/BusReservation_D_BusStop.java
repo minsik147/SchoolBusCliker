@@ -27,6 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+
 public class BusReservation_D_BusStop extends AppCompatActivity
 {
     String userID, userPass, userName, email, tel, address, busNumber;
@@ -38,6 +42,8 @@ public class BusReservation_D_BusStop extends AppCompatActivity
     Button bt_start, bt_end;
     Button bt_OK;
     String[] str_BusStop = new String[20];
+    String[] str_BusStop_Time = new String[20];
+    int int_select_time;
     int int_busStopCount;
     PopupMenu popupMenu;
     Boolean isSelect;
@@ -60,6 +66,8 @@ public class BusReservation_D_BusStop extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_reservation_d_bus_stop);
+
+        LocalDate seoul = LocalDate.now(ZoneId.of("Asia/Seoul"));
 
         isSelect = false;
         int_busStopCount = 0;
@@ -109,37 +117,11 @@ public class BusReservation_D_BusStop extends AppCompatActivity
             public boolean onMenuItemClick(MenuItem menuItem)
             {
                 bt_start.setText(str_BusStop[menuItem.getItemId()]);
+                int_select_time = menuItem.getItemId();
                 bt_OK.setEnabled(true);
                 return false;
             }
         });
-
-//        // 버스 노선 선택 콤보박스
-//        ArrayAdapter spAdapter = new ArrayAdapter(getApplicationContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, str_BusStop);
-//        spinner_start.setAdapter(spAdapter);
-//        spinner_start.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-//        {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-//            {
-//                if (i == 0)
-//                {
-//                    return;
-//                }
-//                else
-//                {
-//                    bt_OK.setEnabled(true);
-//                    tv_start.setText(str_BusStop[i] + "");
-//                    spinner_start.setSelection(0);
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView)
-//            {
-//
-//            }
-//        });
 
         bt_OK.setOnClickListener(new View.OnClickListener()
         {
@@ -155,6 +137,7 @@ public class BusReservation_D_BusStop extends AppCompatActivity
                 }
                 else
                 {
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(BusReservation_D_BusStop.this);
                     builder.setTitle("예약 확인");
                     builder.setMessage("탑승 버스 : " + busNumber + "\n승차 정류장 : " + start + "\n하차 정류장 : 목원대학교\n위 내용이 맞나요?");
@@ -163,6 +146,10 @@ public class BusReservation_D_BusStop extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i)
                         {
+                            LocalTime ExpiredTime = LocalTime.parse(str_BusStop_Time[int_select_time]);
+
+                            String ExpiredDate = date + " " + ExpiredTime.plusHours(1) + ":00";
+
                             builder.setNegativeButton("아니오", null);
                             builder.create().show();
                             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -185,7 +172,7 @@ public class BusReservation_D_BusStop extends AppCompatActivity
                                 }
                             };
                             // 서버로 Volley를 이용해서 요청을 함.
-                            RequestReservation requestReservation = new RequestReservation(userID, userName, busNumber, date, start, "목원대학교", "탑승 전", responseListener);
+                            RequestReservation requestReservation = new RequestReservation(userID, userName, busNumber, date, start, "목원대학교", "탑승 전", ExpiredDate, responseListener);
                             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                             queue.add(requestReservation);
 
@@ -250,8 +237,10 @@ public class BusReservation_D_BusStop extends AppCompatActivity
                     {
                         JSONObject jsonObject = response.getJSONObject(i);
                         String busStop = jsonObject.getString("busStop");
+                        String time = jsonObject.getString("time");
 
                         str_BusStop[i] = busStop + "";
+                        str_BusStop_Time[i] = time + "";
                         int_busStopCount++;
                     }
                 }

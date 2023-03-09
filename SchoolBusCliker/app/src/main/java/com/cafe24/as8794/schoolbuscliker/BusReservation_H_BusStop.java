@@ -27,6 +27,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalTime;
+
 public class BusReservation_H_BusStop extends AppCompatActivity
 {
     String userID, userPass, userName, email, tel, address, busNumber;
@@ -38,6 +40,8 @@ public class BusReservation_H_BusStop extends AppCompatActivity
     Button bt_start, bt_end;
     Button bt_OK;
     String[] str_BusStop = new String[20];
+    String[] str_BusStop_Time = new String[20];
+    int int_select_time;
     int int_busStopCount;
     PopupMenu popupMenu;
     Boolean isSelect;
@@ -109,6 +113,7 @@ public class BusReservation_H_BusStop extends AppCompatActivity
             public boolean onMenuItemClick(MenuItem menuItem)
             {
                 bt_end.setText(str_BusStop[menuItem.getItemId()]);
+                int_select_time = menuItem.getItemId();
                 bt_OK.setEnabled(true);
                 return false;
             }
@@ -164,6 +169,10 @@ public class BusReservation_H_BusStop extends AppCompatActivity
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i)
                         {
+                            LocalTime ExpiredTime = LocalTime.parse(str_BusStop_Time[int_select_time]);
+
+                            String ExpiredDate = date + " " + ExpiredTime.plusHours(1) + ":00";
+
                             builder.setNegativeButton("아니오", null);
                             builder.create().show();
                             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -186,7 +195,7 @@ public class BusReservation_H_BusStop extends AppCompatActivity
                                 }
                             };
                             // 서버로 Volley를 이용해서 요청을 함.
-                            RequestReservation requestReservation = new RequestReservation(userID, userName, busNumber, date, start, end, "탑승 전", responseListener);
+                            RequestReservation requestReservation = new RequestReservation(userID, userName, busNumber, date, start, end, "탑승 전", ExpiredDate, responseListener);
                             RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                             queue.add(requestReservation);
 
@@ -256,8 +265,10 @@ public class BusReservation_H_BusStop extends AppCompatActivity
                     {
                         JSONObject jsonObject = response.getJSONObject(i);
                         String busStop = jsonObject.getString("busStop");
+                        String time = jsonObject.getString("time");
 
                         str_BusStop[i] = busStop + "";
+                        str_BusStop_Time[i] = time + "";
                         int_busStopCount++;
                     }
                 }
