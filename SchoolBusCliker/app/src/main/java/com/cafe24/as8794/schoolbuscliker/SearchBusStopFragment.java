@@ -71,7 +71,11 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
     PathOverlay path;
     Marker[] marker_D1;
     Marker[] marker_D2;
-
+    Marker[] marker_D3;
+    Marker[] marker_D4;
+    Marker[] marker_D5;
+    Marker[] marker_D6;
+    Marker[] marker_D7;
     boolean isLocation;
 
     public SearchBusStopFragment()
@@ -159,6 +163,32 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
             marker_D2[i] = new Marker();
         }
 
+        marker_D3 = new Marker[11];
+        for (int i=0; i<marker_D3.length; i++)
+        {
+            marker_D3[i] = new Marker();
+        }
+        marker_D4 = new Marker[16];
+        for (int i=0; i<marker_D4.length; i++)
+        {
+            marker_D4[i] = new Marker();
+        }
+        marker_D5 = new Marker[14];
+        for (int i=0; i<marker_D5.length; i++)
+        {
+            marker_D5[i] = new Marker();
+        }
+        marker_D6 = new Marker[12];
+        for (int i=0; i<marker_D6.length; i++)
+        {
+            marker_D6[i] = new Marker();
+        }
+        marker_D7 = new Marker[8];
+        for (int i=0; i<marker_D7.length; i++)
+        {
+            marker_D7[i] = new Marker();
+        }
+
         // 경로 그리기
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -235,6 +265,26 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
         for(int j=0; j<marker_D2.length; j++)
         {
             marker_D2[j].setMap(null);
+        }
+        for(int j=0; j<marker_D3.length; j++)
+        {
+            marker_D3[j].setMap(null);
+        }
+        for(int j=0; j<marker_D4.length; j++)
+        {
+            marker_D4[j].setMap(null);
+        }
+        for(int j=0; j<marker_D5.length; j++)
+        {
+            marker_D5[j].setMap(null);
+        }
+        for(int j=0; j<marker_D6.length; j++)
+        {
+            marker_D6[j].setMap(null);
+        }
+        for(int j=0; j<marker_D7.length; j++)
+        {
+            marker_D7[j].setMap(null);
         }
         path.setWidth(18);
         switch (str_busList[i])
@@ -489,11 +539,479 @@ public class SearchBusStopFragment extends Fragment implements OnMapReadyCallbac
                 break;
             case "등교버스3번" :
                 path.setCoords(Arrays.asList(
-                        new LatLng(36.28183624070405, 127.46737007186375), // 산내소방서
-                        new LatLng(36.30162446034211, 127.45673604591207) // 은어송초등학교
+                        new LatLng(36.4554, 127.4283), // 산내소방서
+                        new LatLng(36.451, 127.4288), // 은어송초등학교
+                        new LatLng(36.4474, 127.4294),
+                        new LatLng(36.4411, 127.4287),
+                        new LatLng(36.4397, 127.427),
+                        new LatLng(36.4389, 127.4267),
+                        new LatLng(36.4392, 127.4235),
+                        new LatLng(36.4441, 127.4257),
+                        new LatLng(36.4452, 127.4238),
+                        new LatLng(36.4461, 127.4223),
+                        new LatLng(36.4475, 127.4213),
+                        new LatLng(36.4488, 127.4191),
+                        new LatLng(36.4496, 127.4155),
+                        new LatLng(36.4496, 127.4133),
+                        new LatLng(36.4474, 127.4088),
+                        new LatLng(36.4407, 127.3988),
+                        new LatLng(36.4396, 127.3963),
+                        new LatLng(36.4342, 127.3888),
+                        new LatLng(36.4231, 127.3833),
+                        new LatLng(36.4198, 127.3803),
+                        new LatLng(36.4172, 127.3778),
+                        new LatLng(36.4121, 127.3781),
+                        new LatLng(36.4103, 127.3774),
+                        new LatLng(36.4081, 127.3768),
+                        new LatLng(36.4093, 127.3793),
+                        new LatLng(36.4092, 127.3805),
+                        new LatLng(36.4047, 127.3873),
+                        new LatLng(36.4022, 127.3894),
+                        new LatLng(36.4012, 127.3906),
+                        new LatLng(36.4003, 127.3921),
+                        new LatLng(36.3997, 127.395),
+                        new LatLng(36.3997, 127.4047),
+                        new LatLng(36.3866, 127.405),
+                        new LatLng(36.3853, 127.4052),
+                        new LatLng(36.3802, 127.4067),
+                        new LatLng(36.3783, 127.4055),
+                        new LatLng(36.3775, 127.4048),
+                        new LatLng(36.3772, 127.4043),
+                        new LatLng(36.3763, 127.4014),
+                        new LatLng(36.3758, 127.3985),
+                        new LatLng(36.3744, 127.3935),
+                        new LatLng(36.3671, 127.3934),
+                        new LatLng(36.365, 127.3935),
+                        new LatLng(36.3649, 127.3833),
+                        new LatLng(36.365, 127.3795),
+                        new LatLng(36.3651, 127.3767),
+                        new LatLng(36.3649, 127.3707),
+                        new LatLng(36.3652, 127.3695),
+                        new LatLng(36.3623, 127.3643),
+                        new LatLng(36.361, 127.3622),
+                        new LatLng(36.359, 127.3602),
+                        new LatLng(36.3576, 127.3588),
+                        new LatLng(36.3533, 127.3526),
+                        new LatLng(36.3521, 127.3516),
+                        new LatLng(36.3512, 127.3511),
+                        new LatLng(36.3538, 127.3415),
+                        new LatLng(36.351, 127.3402),
+                        new LatLng(36.3487, 127.3402),
+                        new LatLng(36.3459, 127.3402),
+                        new LatLng(36.3444, 127.3399),
+                        new LatLng(36.343, 127.3393),
+                        new LatLng(36.3382, 127.3355),
+                        new LatLng(36.3382, 127.3382),
+                        new LatLng(36.3301, 127.3382)
                 ));
-                path.setColor(Color.BLUE);
+                path.setColor(0xFFA72B43);
                 path.setMap(naverMap);
+
+                marker_D3[0].setPosition(new LatLng(36.4496, 127.4291));
+                marker_D3[0].setCaptionText("신탄진역");
+                marker_D3[1].setPosition(new LatLng( 36.4392, 127.4246));
+                marker_D3[1].setCaptionText("신탄진 톨게이트 전 주공Ⓐ");
+                marker_D3[2].setPosition(new LatLng(36.4444, 127.4253));
+                marker_D3[2].setCaptionText("삼성전자 리빙프라자");
+                marker_D3[3].setPosition(new LatLng(36.4486, 127.4111));
+                marker_D3[3].setCaptionText("묵상동 파출소 건너");
+                marker_D3[4].setPosition(new LatLng(36.4312, 127.3871));
+                marker_D3[4].setCaptionText("송강체육관 앞 버스승강장");
+                marker_D3[5].setPosition(new LatLng(36.4211, 127.3813));
+                marker_D3[5].setCaptionText("대전테크노벨리 날망집 버스승강장");
+                marker_D3[6].setPosition(new LatLng(36.3996, 127.4037));
+                marker_D3[6].setCaptionText("전민동 세종Ⓐ 건너편");
+                marker_D3[7].setPosition(new LatLng(36.3775, 127.3902));
+                marker_D3[7].setCaptionText("외국인 유학생 기숙사");
+                marker_D3[8].setPosition(new LatLng(37.3651, 127.3755));
+                marker_D3[8].setCaptionText("한아름Ⓐ 102동 건너 만년 버스승강장");
+                marker_D3[9].setPosition(new LatLng(37.3554, 127.3412));
+                marker_D3[9].setCaptionText("유성온천역 3번출구");
+                marker_D3[10].setPosition(new LatLng(36.32668980512917, 127.3384906899361));
+                marker_D3[10].setCaptionText("목원대학교");
+
+                for(int j=0; j< marker_D3.length; j++)
+                {
+                    marker_D3[j].setWidth(80);
+                    marker_D3[j].setHeight(110);
+                    marker_D3[j].setMap(naverMap);
+                }
+
+                cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.4554, 127.4283), 11).animate(CameraAnimation.Fly, 1000);;
+                naverMap.moveCamera(cameraUpdate);
+                break;
+
+
+
+            case "등교버스4번" :
+                path.setCoords(Arrays.asList(
+                        new LatLng(36.5135, 127.2591),
+                        new LatLng(36.5121, 127.2595),
+                        new LatLng(36.5112, 127.26),
+                        new LatLng(36.5098, 127.2609),
+                        new LatLng(36.5086, 127.2614),
+                        new LatLng(36.5078, 127.2617),
+                        new LatLng(36.5068, 127.2618),
+                        new LatLng(36.5046, 127.2612),
+                        new LatLng(36.4998, 127.2589),
+                        new LatLng(36.4974, 127.2574),
+                        new LatLng(36.4944, 127.2563),
+                        new LatLng(36.4912, 127.2563),
+                        new LatLng(36.4892, 127.2567),
+                        new LatLng(36.486, 127.2582),
+                        new LatLng(36.484, 127.2596),
+                        new LatLng(36.4723, 127.268),
+                        new LatLng(36.4717, 127.2686),
+                        new LatLng(36.4711, 127.2699),
+                        new LatLng(36.4692, 127.269),
+                        new LatLng(36.4687, 127.2719),
+                        new LatLng(36.4692, 127.2747),
+                        new LatLng(36.4647, 127.2753),
+                        new LatLng(36.4625, 127.2763),
+                        new LatLng(36.4568, 127.2821),
+                        new LatLng(36.4554, 127.2833),
+                        new LatLng(36.4538, 127.2842),
+                        new LatLng(36.452, 127.285),
+                        new LatLng(36.4502, 127.2855),
+                        new LatLng(36.4487, 127.2857),
+                        new LatLng(36.4389, 127.2857),
+                        new LatLng(36.4372, 127.2855),
+                        new LatLng(36.4362, 127.2849),
+                        new LatLng(36.4355, 127.2838),
+                        new LatLng(36.4355, 127.2859),
+                        new LatLng(36.4332, 127.2861),
+                        new LatLng(36.4304, 127.287),
+                        new LatLng(36.4284, 127.2888),
+                        new LatLng(36.4233, 127.2956),
+                        new LatLng(36.4221, 127.2972),
+                        new LatLng(36.4207, 127.2982),
+                        new LatLng(36.4188, 127.2989),
+                        new LatLng(36.4151, 127.2996),
+                        new LatLng(36.4103, 127.3012),
+                        new LatLng(36.406, 127.304),
+                        new LatLng(36.3996, 127.3097),
+                        new LatLng(36.3959, 127.3117),
+                        new LatLng(36.3843, 127.3203),
+                        new LatLng(36.3806, 127.3181),
+                        new LatLng(36.3797, 127.3179),
+                        new LatLng(36.3668, 127.3179),
+                        new LatLng(36.3667, 127.3307),
+                        new LatLng(36.3643, 127.3378),
+                        new LatLng(36.364, 127.3378),
+                        new LatLng(36.3625, 127.3369),
+                        new LatLng(36.3607, 127.3357),
+                        new LatLng(36.3578, 127.3318),
+                        new LatLng(36.3542, 127.3303),
+                        new LatLng(36.3524, 127.3291),
+                        new LatLng(36.3508, 127.335),
+                        new LatLng(36.3502, 127.34),
+                        new LatLng(36.3486, 127.3402),
+                        new LatLng(36.3459, 127.3401),
+                        new LatLng(36.343, 127.3394),
+                        new LatLng(36.3382, 127.3354),
+                        new LatLng(36.3382, 127.3382),
+                        new LatLng(36.3292, 127.3382)
+                ));
+                path.setColor(0xFFA72B43);
+                path.setMap(naverMap);
+
+                marker_D4[0].setPosition(new LatLng(36.5179, 127.2588));
+                marker_D4[0].setCaptionText("도램마을 지선버스 승강장(안경마을 앞)");
+                marker_D4[1].setPosition(new LatLng( 36.5008, 127.2593));
+                marker_D4[1].setCaptionText("세종청사 남측");
+                marker_D4[2].setPosition(new LatLng(36.4877, 127.2571));
+                marker_D4[2].setCaptionText("연세에스의원 피부과 앞");
+                marker_D4[3].setPosition(new LatLng(36.4811, 127.2616));
+                marker_D4[3].setCaptionText("첫마을 2단지버스승강장");
+                marker_D4[4].setPosition(new LatLng(36.4688, 127.2735));
+                marker_D4[4].setCaptionText("세종고속버스터미널");
+                marker_D4[5].setPosition(new LatLng(36.3925, 127.3141));
+                marker_D4[5].setCaptionText("반석역 4번 출구");
+                marker_D4[6].setPosition(new LatLng(36.3866, 127.3184));
+                marker_D4[6].setCaptionText("휴 사우나 앞 버스승강장");
+                marker_D4[7].setPosition(new LatLng(36.3848, 127.3198));
+                marker_D4[7].setCaptionText("지족역(신학대학 출구)");
+                marker_D4[8].setPosition(new LatLng(36.3744, 127.3178));
+                marker_D4[8].setCaptionText("노은역 2번 출구");
+                marker_D4[9].setPosition(new LatLng(36.3689, 127.3177));
+                marker_D4[9].setCaptionText("대전유성소방서 노은119 버스승강장");
+                marker_D4[10].setPosition(new LatLng(36.3636, 127.3375));
+                marker_D4[10].setCaptionText("하이마트 건너 밀레유성점 앞");
+                marker_D4[11].setPosition(new LatLng(36.3614, 127.3361));
+                marker_D4[11].setCaptionText("유성 새마을금고 앞 버스승강장");
+                marker_D4[12].setPosition(new LatLng(36.356, 127.331));
+                marker_D4[12].setCaptionText("구암역 지나 버스승강장");
+                marker_D4[13].setPosition(new LatLng(36.3515, 127.3322));
+                marker_D4[13].setCaptionText("정림스토어 건너 김밥천국");
+                marker_D4[14].setPosition(new LatLng(36.3506, 127.3358));
+                marker_D4[14].setCaptionText("유성고등학교 앞");
+                marker_D4[15].setPosition(new LatLng(36.32668980512917, 127.3384906899361));
+                marker_D4[15].setCaptionText("목원대학교");
+
+
+                for(int j=0; j< marker_D4.length; j++)
+                {
+                    marker_D4[j].setWidth(80);
+                    marker_D4[j].setHeight(110);
+                    marker_D4[j].setMap(naverMap);
+                }
+
+                cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.5135, 127.2591), 11).animate(CameraAnimation.Fly, 1000);;
+                naverMap.moveCamera(cameraUpdate);
+                break;
+
+            case "등교버스5번" :
+                path.setCoords(Arrays.asList(
+                        new LatLng(36.2824, 127.2393),
+                        new LatLng(36.2885, 127.2417),
+                        new LatLng(36.288, 127.2436),
+                        new LatLng(36.288, 127.2441),
+                        new LatLng(36.2885, 127.245),
+                        new LatLng(36.2931, 127.2426),
+                        new LatLng(36.2936, 127.2428),
+                        new LatLng(36.2944, 127.2438),
+                        new LatLng(36.295, 127.2449),
+                        new LatLng(36.2957, 127.246),
+                        new LatLng(36.2967, 127.2462),
+                        new LatLng(36.2999, 127.2423),
+                        new LatLng(36.2999, 127.2359),
+                        new LatLng(36.2988, 127.2359),
+                        new LatLng(36.2982, 127.2363),
+                        new LatLng(36.2973, 127.2377),
+                        new LatLng(36.2946, 127.2413),
+                        new LatLng(36.2935, 127.2423),
+                        new LatLng(36.2884, 127.2449),
+                        new LatLng(36.2845, 127.2474),
+                        new LatLng(36.2825, 127.25),
+                        new LatLng(36.2819, 127.2506),
+                        new LatLng(36.2786, 127.2518),
+                        new LatLng(36.2763, 127.2526),
+                        new LatLng(36.2757, 127.2533),
+                        new LatLng(36.2726, 127.25),
+                        new LatLng(36.2721, 127.2508),
+                        new LatLng(36.2721, 127.2513),
+                        new LatLng(36.2727, 127.2521),
+                        new LatLng(36.2726, 127.2533),
+                        new LatLng(36.2712, 127.2554),
+                        new LatLng(36.2712, 127.2554),
+                        new LatLng(36.2705, 127.2586),
+                        new LatLng(36.2679, 127.2602),
+                        new LatLng(36.2688, 127.2625),
+                        new LatLng(36.2687, 127.2633),
+                        new LatLng(36.2684, 127.2642),
+                        new LatLng(36.2684, 127.2673),
+                        new LatLng(36.2683, 127.2685),
+                        new LatLng(36.2672, 127.2706),
+                        new LatLng(36.265, 127.2737),
+                        new LatLng(36.2624, 127.2756),
+                        new LatLng(36.2629, 127.2775),
+                        new LatLng(36.2635, 127.2786),
+                        new LatLng(36.2668, 127.2814),
+                        new LatLng(36.2668, 127.283),
+                        new LatLng(36.2667, 127.2871),
+                        new LatLng(36.2669, 127.2886),
+                        new LatLng(36.2677, 127.29),
+                        new LatLng(36.2688, 127.2907),
+                        new LatLng(36.2722, 127.2911),
+                        new LatLng(36.2737, 127.2914),
+                        new LatLng(36.2776, 127.2944),
+                        new LatLng(36.2787, 127.2959),
+                        new LatLng(36.2793, 127.2973),
+                        new LatLng(36.2799, 127.3),
+                        new LatLng(36.2803, 127.301),
+                        new LatLng(36.2812, 127.3026),
+                        new LatLng(36.2815, 127.3044),
+                        new LatLng(36.2817, 127.3062),
+                        new LatLng(36.2834, 127.3096),
+                        new LatLng(36.285, 127.3109),
+                        new LatLng(36.2856, 127.3118),
+                        new LatLng(36.2858, 127.3129),
+                        new LatLng(36.2857, 127.3162),
+                        new LatLng(36.2859, 127.3172),
+                        new LatLng(36.2873, 127.3194),
+                        new LatLng(36.2882, 127.3199),
+                        new LatLng(36.2892, 127.3201),
+                        new LatLng(36.2917, 127.3201),
+                        new LatLng(36.2966, 127.322),
+                        new LatLng(36.2984, 127.3234),
+                        new LatLng(36.2985, 127.324),
+                        new LatLng(36.2966, 127.3275),
+                        new LatLng(36.2962, 127.33),
+                        new LatLng(36.2964, 127.3347),
+                        new LatLng(36.3013, 127.335),
+                        new LatLng(36.3014, 127.3365),
+                        new LatLng(36.302, 127.3388),
+                        new LatLng(36.3031, 127.3443),
+                        new LatLng(36.304, 127.3488),
+                        new LatLng(36.3052, 127.3534),
+                        new LatLng(36.3167, 127.3485),
+                        new LatLng(36.3177, 127.3481),
+                        new LatLng(36.3323, 127.3483),
+                        new LatLng(36.3323, 127.3381),
+                        new LatLng(36.3292, 127.3381)
+                ));
+                path.setColor(0xFFA72B43);
+                path.setMap(naverMap);
+
+                marker_D5[0].setPosition(new LatLng(36.2824, 127.2394));
+                marker_D5[0].setCaptionText("하나로마트 건너");
+                marker_D5[1].setPosition(new LatLng( 36.2863, 127.2409));
+                marker_D5[1].setCaptionText("사계절마트(구, K-마트)");
+                marker_D5[2].setPosition(new LatLng(36.2972, 127.2456));
+                marker_D5[2].setCaptionText("삼위일체 성당");
+                marker_D5[3].setPosition(new LatLng(36.2999, 127.2413));
+                marker_D5[3].setCaptionText("초록델리 앞");
+                marker_D5[4].setPosition(new LatLng(36.2723, 127.2504));
+                marker_D5[4].setCaptionText("계룡보건소 버스승강장");
+                marker_D5[5].setPosition(new LatLng(36.2696, 127.2566));
+                marker_D5[5].setCaptionText("금암주공Ⓐ 203동 앞");
+                marker_D5[6].setPosition(new LatLng(36.2673, 127.2703));
+                marker_D5[6].setCaptionText("포스코더샵Ⓐ 정문 건너");
+                marker_D5[7].setPosition(new LatLng(36.2982, 127.3244));
+                marker_D5[7].setCaptionText("진잠4거리 버스승강장 앞");
+                marker_D5[8].setPosition(new LatLng(36.2962, 127.3316));
+                marker_D5[8].setCaptionText("구봉마을Ⓐ 9단지 육교 승강장");
+                marker_D5[9].setPosition(new LatLng(36.2971, 127.3349));
+                marker_D5[9].setCaptionText("관저2동 주민센터 앞");
+                marker_D5[10].setPosition(new LatLng(36.3019, 127.3389));
+                marker_D5[10].setCaptionText("KT건너 인도 지하차도 입구");
+                marker_D5[11].setPosition(new LatLng(36.3028, 127.3435));
+                marker_D5[11].setCaptionText("느리울 11단지 옆 버스승강장");
+                marker_D5[12].setPosition(new LatLng(36.3036, 127.3469));
+                marker_D5[12].setCaptionText("가수원 더맑음웨딩 앞 버스승강장");
+                marker_D5[13].setPosition(new LatLng(36.32668980512917, 127.3384906899361));
+                marker_D5[13].setCaptionText("목원대학교");
+
+                for(int j=0; j< marker_D5.length; j++)
+                {
+                    marker_D5[j].setWidth(80);
+                    marker_D5[j].setHeight(110);
+                    marker_D5[j].setMap(naverMap);
+                }
+
+                cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.2824, 127.2393), 11).animate(CameraAnimation.Fly, 1000);;
+                naverMap.moveCamera(cameraUpdate);
+                break;
+
+            case "등교버스6번" :
+                path.setCoords(Arrays.asList(
+                        new LatLng(36.3608, 127.3962),
+                        new LatLng(36.3598, 127.3953),
+                        new LatLng(36.349, 127.3952),
+                        new LatLng(36.349, 127.3903),
+                        new LatLng(36.3579, 127.3903),
+                        new LatLng(36.3579, 127.3687),
+                        new LatLng(36.3587, 127.3616),
+                        new LatLng(36.3603, 127.3505),
+                        new LatLng(36.3609, 127.3479),
+                        new LatLng(36.3622, 127.3447),
+                        new LatLng(36.3509, 127.3402),
+                        new LatLng(36.3487, 127.3401),
+                        new LatLng(36.3459, 127.3401),
+                        new LatLng(36.3448, 127.34),
+                        new LatLng(36.343, 127.3394),
+                        new LatLng(36.3364, 127.3339),
+                        new LatLng(36.3346, 127.333),
+                        new LatLng(36.3321, 127.3326),
+                        new LatLng(36.3321, 127.3381),
+                        new LatLng(36.3292, 127.3381)
+
+                ));
+                path.setColor(0xFFA72B43);
+                path.setMap(naverMap);
+
+                marker_D6[0].setPosition(new LatLng(36.3604, 127.3959));
+                marker_D6[0].setCaptionText("샘머리Ⓐ 222동 앞 하나로축산");
+                marker_D6[1].setPosition(new LatLng( 36.355, 127.3952));
+                marker_D6[1].setCaptionText("한밭초등학교 버스승강장");
+                marker_D6[2].setPosition(new LatLng(36.3504, 127.3951));
+                marker_D6[2].setCaptionText("탄방중학교 정문");
+                marker_D6[3].setPosition(new LatLng(36.3499, 127.3902));
+                marker_D6[3].setCaptionText("목련Ⓐ 102동 앞 버스승강장");
+                marker_D6[4].setPosition(new LatLng(36.3544, 127.3904));
+                marker_D6[4].setCaptionText("한마루 삼성Ⓐ 7동옆 버스승강장");
+                marker_D6[5].setPosition(new LatLng(36.3579, 127.3893));
+                marker_D6[5].setCaptionText("사학연금회관");
+                marker_D6[6].setPosition(new LatLng(36.358, 127.3749));
+                marker_D6[6].setCaptionText("무지개Ⓐ 104동");
+                marker_D6[7].setPosition(new LatLng(36.358, 127.3687));
+                marker_D6[7].setCaptionText("누리Ⓐ 104동");
+                marker_D6[8].setPosition(new LatLng(36.3613, 127.3473));
+                marker_D6[8].setCaptionText("궁동 다솔Ⓐ 버스승강장");
+                marker_D6[9].setPosition(new LatLng(36.3636, 127.3375));
+                marker_D6[9].setCaptionText("충대정문 건너 대전교회 학생센터 앞");
+                marker_D6[10].setPosition(new LatLng(36.3534, 127.3412));
+                marker_D6[10].setCaptionText("유성온천역 3번 출구");
+                marker_D6[11].setPosition(new LatLng(36.32668980512917, 127.3384906899361));
+                marker_D6[11].setCaptionText("목원대학교");
+
+                for(int j=0; j< marker_D6.length; j++)
+                {
+                    marker_D6[j].setWidth(80);
+                    marker_D6[j].setHeight(110);
+                    marker_D6[j].setMap(naverMap);
+                }
+
+                cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.3608, 127.3962), 11).animate(CameraAnimation.Fly, 1000);;
+                naverMap.moveCamera(cameraUpdate);
+                break;
+
+            case "등교버스7번" :
+                path.setCoords(Arrays.asList(
+                        new LatLng(36.3613, 127.356),
+                        new LatLng(36.3604, 127.3527),
+                        new LatLng(36.3605, 127.3503),
+                        new LatLng(36.3622, 127.3452),
+                        new LatLng(36.3622, 127.3446),
+                        new LatLng(36.3594, 127.3434),
+                        new LatLng(36.3599, 127.3416),
+                        new LatLng(36.362, 127.3366),
+                        new LatLng(36.3607, 127.3357),
+                        new LatLng(36.3597, 127.3361),
+                        new LatLng(36.3551, 127.3367),
+                        new LatLng(36.3537, 127.3414),
+                        new LatLng(36.3502, 127.34),
+                        new LatLng(36.3487, 127.3402),
+                        new LatLng(36.3458, 127.3402),
+                        new LatLng(36.3429, 127.3392),
+                        new LatLng(36.3382, 127.3355),
+                        new LatLng(36.3362, 127.3337),
+                        new LatLng(36.3346, 127.3331),
+                        new LatLng(36.3321, 127.3326),
+                        new LatLng(36.332, 127.3381),
+                        new LatLng(36.332, 127.3381)
+
+                ));
+                path.setColor(0xFFA72B43);
+                path.setMap(naverMap);
+
+                marker_D7[0].setPosition(new LatLng(36.3614, 127.3561));
+                marker_D7[0].setCaptionText("유성구청 앞");
+                marker_D7[1].setPosition(new LatLng( 36.3607, 127.3498));
+                marker_D7[1].setCaptionText("궁동 대학로 마트 앞(소비자마트)");
+                marker_D7[2].setPosition(new LatLng(36.3602, 127.3409));
+                marker_D7[2].setCaptionText("유성문화원 건너");
+                marker_D7[3].setPosition(new LatLng(36.3615,127.3379));
+                marker_D7[3].setCaptionText("드림월드Ⓐ 111동 앞 드림슈퍼");
+                marker_D7[4].setPosition(new LatLng(36.3602, 127.3359));
+                marker_D7[4].setCaptionText("금호고속 건너 태전마트 앞");
+                marker_D7[5].setPosition(new LatLng(36.3549, 127.3373));
+                marker_D7[5].setCaptionText("유성시외버스터미널 건너 롯데리아");
+                marker_D7[6].setPosition(new LatLng(36.3534, 127.3412));
+                marker_D7[6].setCaptionText("유성온천역 3번 출구");
+                marker_D7[7].setPosition(new LatLng(36.32668980512917, 127.3384906899361));
+                marker_D7[7].setCaptionText("목원대학교");
+
+
+                for(int j=0; j< marker_D7.length; j++)
+                {
+                    marker_D7[j].setWidth(80);
+                    marker_D7[j].setHeight(110);
+                    marker_D7[j].setMap(naverMap);
+                }
+
+                cameraUpdate = CameraUpdate.scrollAndZoomTo(new LatLng(36.3613, 127.356), 11).animate(CameraAnimation.Fly, 1000);;
+                naverMap.moveCamera(cameraUpdate);
                 break;
             default:
                 path.setMap(null);
